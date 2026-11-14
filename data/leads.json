@@ -16,5 +16,25 @@
     "budget": "Custom Scope",
     "message": "Automated validation test",
     "submitted_at": "2026-11-14T16:32:17.750847Z"
+  },
+  {
+    "name": "Aarav Sharma",
+    "email": "aarav@techventure.in",
+    "phone": "+91 98765 43210",
+    "service": "Full App + Web Duo Ecosystem",
+    "modules": "Swift / Kotlin, Offline SQLite, Next.js SSR",
+    "budget": "",
+    "message": "We need a dual mobile and web app with real-time sync.",
+    "id": "lead_1794659049177",
+    "submitted_at": "2026-11-14 17:54:09 UTC"
+  },
+  {
+    "name": "Test Sagnik",
+    "email": "sagnik@suflexmedia.com",
+    "phone": "8637871144",
+    "service": "Mobile App (iOS/Android)",
+    "budget": "",
+    "message": "I want to test",
+    "submitted_at": "2026-11-14T18:08:40.498042Z"
   }
 ]

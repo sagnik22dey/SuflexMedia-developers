@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Submissions &amp; Leads Portal — SuflexMedia</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Bricolage+Grotesque:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg"/>
+  <link rel="stylesheet" href="/static/css/style.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandBlue: "#2a6bff",
+            brandInk: "#0b0b0e",
+            brandSurface: "#141622",
+            brandSurfaceRaised: "#1b1e2e"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Bricolage Grotesque", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-[#0b0b0e] text-slate-200 min-h-screen">
+
+  <header class="glass-nav sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-[#141622] border border-white/10 flex items-center justify-center text-[#2a6bff]">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        <div>
+          <h1 class="font-display font-bold text-lg text-white">SuflexMedia Submissions Portal</h1>
+          <p class="text-xs text-slate-400">Internal Architecture Briefs &amp; Client Inquiries</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="/api/admin/leads/export-csv" class="btn-secondary text-xs py-2 px-4">
+          <svg class="w-4 h-4 text-[#2a6bff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          <span>Export CSV</span>
+        </a>
+        <a href="/" class="btn-primary text-xs py-2 px-4">
+          <span>&larr; View Website</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-8">
+      <div class="card-v2 p-5">
+        <span class="text-xs text-slate-400 font-semibold uppercase tracking-wider block">Total Submissions</span>
+        <span class="font-display text-3xl font-extrabold text-white mt-1 block" id="totalCountDisplay">{{ total_leads }}</span>
+      </div>
+      <div class="card-v2 p-5">
+        <span class="text-xs text-slate-400 font-semibold uppercase tracking-wider block">Target: Mobile Apps</span>
+        <span class="font-display text-3xl font-extrabold text-[#2a6bff] mt-1 block" id="mobileCountDisplay">0</span>
+      </div>
+      <div class="card-v2 p-5">
+        <span class="text-xs text-slate-400 font-semibold uppercase tracking-wider block">Target: Web Platforms</span>
+        <span class="font-display text-3xl font-extrabold text-white mt-1 block" id="webCountDisplay">0</span>
+      </div>
+      <div class="card-v2 p-5">
+        <span class="text-xs text-slate-400 font-semibold uppercase tracking-wider block">Target: App+Web / SaaS</span>
+        <span class="font-display text-3xl font-extrabold text-[#2a6bff] mt-1 block" id="duoCountDisplay">0</span>
+      </div>
+    </div>
+
+    <div class="card-v2 p-6 mb-8">
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+        <div class="relative flex-1 max-w-md">
+          <input id="adminSearchInput" oninput="filterSubmissionsTable()" type="text" placeholder="Search by name, email, phone or service..." class="input-v2 w-full h-12 bg-[#0b0b0e] text-white border border-white/10 rounded-xl px-4 pr-10 text-sm placeholder:text-slate-500 focus:bg-[#141622] focus:border-[#2a6bff] focus:outline-none focus:ring-1 focus:ring-[#2a6bff]" style="background-color: #0b0b0e !important; color: #ffffff !important;"/>
+          <svg class="w-5 h-5 text-slate-400 absolute right-3 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="filterByService('all', this)" class="tab-pill active text-xs">All</button>
+          <button onclick="filterByService('Mobile', this)" class="tab-pill text-xs">Mobile</button>
+          <button onclick="filterByService('Web', this)" class="tab-pill text-xs">Web</button>
+          <button onclick="filterByService('Ecosystem', this)" class="tab-pill text-xs">Ecosystem</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-v2 overflow-hidden border border-white/10">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm text-slate-300">
+          <thead class="bg-[#1b1e2e] text-xs uppercase tracking-wider text-slate-400 border-b border-white/10">
+            <tr>
+              <th scope="col" class="py-4 px-6">Timestamp (UTC)</th>
+              <th scope="col" class="py-4 px-6">Founder / Org</th>
+              <th scope="col" class="py-4 px-6">Contact Info</th>
+              <th scope="col" class="py-4 px-6">Infrastructure</th>
+              <th scope="col" class="py-4 px-6">Modules &amp; Notes</th>
+              <th scope="col" class="py-4 px-6 text-right">Quick Outreach</th>
+            </tr>
+          </thead>
+          <tbody id="leadsTableBody" class="divide-y divide-white/5">
+            {% if leads %}
+              {% for lead in leads %}
+              <tr class="lead-row hover:bg-white/[0.02] transition-colors" data-service="{{ lead.service }}" data-text="{{ lead.name }} {{ lead.email }} {{ lead.phone }} {{ lead.service }} {{ lead.modules }} {{ lead.message }}">
+                <td class="py-4 px-6 whitespace-nowrap text-xs text-slate-400 font-mono">
+                  {{ lead.submitted_at }}
+                </td>
+                <td class="py-4 px-6 font-semibold text-white">
+                  {{ lead.name }}
+                </td>
+                <td class="py-4 px-6 space-y-1">
+                  <div class="text-xs text-slate-200">{{ lead.email }}</div>
+                  <div class="text-xs text-[#2a6bff] font-mono">{{ lead.phone }}</div>
+                </td>
+                <td class="py-4 px-6">
+                  <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-semibold bg-[#2a6bff]/10 border border-[#2a6bff]/30 text-[#2a6bff]">
+                    {{ lead.service }}
+                  </span>
+                </td>
+                <td class="py-4 px-6 max-w-xs text-xs space-y-1">
+                  {% if lead.modules %}
+                  <div class="text-slate-300 font-medium">{{ lead.modules }}</div>
+                  {% endif %}
+                  {% if lead.message %}
+                  <div class="text-slate-400 italic truncate">{{ lead.message }}</div>
+                  {% endif %}
+                </td>
+                <td class="py-4 px-6 text-right space-x-2 whitespace-nowrap">
+                  <a href="https://wa.me/{{ lead.phone | replace('+', '') | replace(' ', '') | replace('-', '') }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/30 hover:bg-[#25D366]/20 text-xs font-semibold">
+                    <span>WhatsApp</span>
+                  </a>
+                  <a href="mailto:{{ lead.email }}" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/5 text-slate-300 border border-white/10 hover:text-white hover:bg-white/10 text-xs font-semibold">
+                    <span>Email</span>
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr id="emptyRow">
+                <td colspan="6" class="py-12 text-center text-slate-500">
+                  <svg class="w-10 h-10 mx-auto mb-3 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+                  </svg>
+                  <p class="text-sm">No submissions recorded yet.</p>
+                </td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    function calculateStats() {
+      const rows = document.querySelectorAll('.lead-row');
+      let mobile = 0, web = 0, duo = 0;
+      rows.forEach(row => {
+        const s = (row.getAttribute('data-service') || '').toLowerCase();
+        if (s.includes('mobile')) mobile++;
+        else if (s.includes('web') && !s.includes('duo') && !s.includes('ecosystem')) web++;
+        else duo++;
+      });
+      document.getElementById('mobileCountDisplay').textContent = mobile;
+      document.getElementById('webCountDisplay').textContent = web;
+      document.getElementById('duoCountDisplay').textContent = duo;
+    }
+
+    function filterSubmissionsTable() {
+      const query = (document.getElementById('adminSearchInput').value || '').toLowerCase();
+      const rows = document.querySelectorAll('.lead-row');
+      rows.forEach(row => {
+        const text = (row.getAttribute('data-text') || '').toLowerCase();
+        if (text.includes(query)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+
+    function filterByService(category, btnEl) {
+      document.querySelectorAll('.tab-pill').forEach(b => b.classList.remove('active'));
+      btnEl.classList.add('active');
+      const rows = document.querySelectorAll('.lead-row');
+      rows.forEach(row => {
+        const s = (row.getAttribute('data-service') || '').toLowerCase();
+        if (category === 'all') {
+          row.style.display = '';
+        } else if (category === 'Mobile' && s.includes('mobile')) {
+          row.style.display = '';
+        } else if (category === 'Web' && s.includes('web') && !s.includes('duo') && !s.includes('ecosystem')) {
+          row.style.display = '';
+        } else if (category === 'Ecosystem' && (s.includes('duo') || s.includes('ecosystem') || s.includes('saas'))) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', calculateStats);
+  </script>
+</body>
+</html>
