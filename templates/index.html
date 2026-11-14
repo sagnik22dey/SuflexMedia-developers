@@ -234,14 +234,17 @@
                 <div>
                   <label for="leadName" class="block text-xs font-medium text-slate-400 mb-1">Founder / Organization Name *</label>
                   <input id="leadName" required minlength="2" maxlength="100" type="text" placeholder="e.g. Apex Global Systems" class="input-v2 w-full h-12 bg-[#0b0b0e] text-white border border-white/10 rounded-xl px-4 text-sm placeholder:text-slate-500 focus:bg-[#141622] focus:border-[#2a6bff] focus:outline-none focus:ring-1 focus:ring-[#2a6bff] transition-colors" style="background-color: #0b0b0e !important; color: #ffffff !important;"/>
+                  <div id="leadNameError" class="hidden text-[11px] text-red-400 mt-1 font-medium"></div>
                 </div>
                 <div>
                   <label for="leadEmail" class="block text-xs font-medium text-slate-400 mb-1">Work Email *</label>
                   <input id="leadEmail" required type="email" placeholder="founder@company.com" class="input-v2 w-full h-12 bg-[#0b0b0e] text-white border border-white/10 rounded-xl px-4 text-sm placeholder:text-slate-500 focus:bg-[#141622] focus:border-[#2a6bff] focus:outline-none focus:ring-1 focus:ring-[#2a6bff] transition-colors" style="background-color: #0b0b0e !important; color: #ffffff !important;"/>
+                  <div id="leadEmailError" class="hidden text-[11px] text-red-400 mt-1 font-medium"></div>
                 </div>
                 <div>
                   <label for="leadPhone" class="block text-xs font-medium text-slate-400 mb-1">WhatsApp or Phone Number *</label>
-                  <input id="leadPhone" required minlength="7" maxlength="25" type="tel" placeholder="+91 98765 43210" class="input-v2 w-full h-12 bg-[#0b0b0e] text-white border border-white/10 rounded-xl px-4 text-sm placeholder:text-slate-500 focus:bg-[#141622] focus:border-[#2a6bff] focus:outline-none focus:ring-1 focus:ring-[#2a6bff] transition-colors" style="background-color: #0b0b0e !important; color: #ffffff !important;"/>
+                  <input id="leadPhone" required minlength="10" maxlength="16" type="tel" placeholder="+91 98765 43210 (10 digits)" class="input-v2 w-full h-12 bg-[#0b0b0e] text-white border border-white/10 rounded-xl px-4 text-sm placeholder:text-slate-500 focus:bg-[#141622] focus:border-[#2a6bff] focus:outline-none focus:ring-1 focus:ring-[#2a6bff] transition-colors" style="background-color: #0b0b0e !important; color: #ffffff !important;"/>
+                  <div id="leadPhoneError" class="hidden text-[11px] text-red-400 mt-1 font-medium"></div>
                 </div>
                 <div>
                   <label for="leadMessage" class="block text-xs font-medium text-slate-400 mb-1">Brief Description / Requirements (Optional)</label>

@@ -189,6 +189,107 @@ function getSelectedModules() {
   return modules.join(", ");
 }
 
+function validateName(name) {
+  const trimmed = (name || "").trim();
+  if (trimmed.length < 2) {
+    return "Founder or organization name must be at least 2 characters.";
+  }
+  if (!/[a-zA-Z]/.test(trimmed)) {
+    return "Name must contain letters.";
+  }
+  return "";
+}
+
+function validateEmail(email) {
+  const trimmed = (email || "").trim();
+  if (!trimmed) {
+    return "Email address is required.";
+  }
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (!emailRegex.test(trimmed)) {
+    return "Please enter a valid email address with a domain (e.g. founder@company.com).";
+  }
+  return "";
+}
+
+function validatePhone(phone) {
+  const trimmed = (phone || "").trim();
+  if (!trimmed) {
+    return "Phone or WhatsApp number is required.";
+  }
+  const digits = trimmed.replace(/[^\d]/g, "");
+  if (digits.length < 10) {
+    return "Phone number is too short (" + digits.length + " digits). Please enter a valid 10-digit mobile number.";
+  }
+  if (digits.length > 13) {
+    return "Phone number is too long (" + digits.length + " digits). Standard numbers cannot exceed 10 digits (or 13 with country code).";
+  }
+  if (/^(\d)\1{9,}$/.test(digits.slice(-10))) {
+    return "Please enter an authentic mobile number.";
+  }
+  return "";
+}
+
+function setFieldValidationUI(inputEl, errorEl, errorMsg) {
+  if (!inputEl) return;
+  if (errorMsg) {
+    inputEl.classList.add("!border-red-500", "focus:!border-red-500");
+    if (errorEl) {
+      errorEl.textContent = errorMsg;
+      errorEl.classList.remove("hidden");
+    }
+  } else {
+    inputEl.classList.remove("!border-red-500", "focus:!border-red-500");
+    if (errorEl) {
+      errorEl.textContent = "";
+      errorEl.classList.add("hidden");
+    }
+  }
+}
+
+function setupFormValidationListeners() {
+  const nameInput = document.getElementById("leadName");
+  const emailInput = document.getElementById("leadEmail");
+  const phoneInput = document.getElementById("leadPhone");
+
+  const nameError = document.getElementById("leadNameError");
+  const emailError = document.getElementById("leadEmailError");
+  const phoneError = document.getElementById("leadPhoneError");
+
+  if (nameInput) {
+    nameInput.addEventListener("blur", function () {
+      setFieldValidationUI(nameInput, nameError, validateName(nameInput.value));
+    });
+    nameInput.addEventListener("input", function () {
+      if (nameError && !nameError.classList.contains("hidden")) {
+        setFieldValidationUI(nameInput, nameError, validateName(nameInput.value));
+      }
+    });
+  }
+
+  if (emailInput) {
+    emailInput.addEventListener("blur", function () {
+      setFieldValidationUI(emailInput, emailError, validateEmail(emailInput.value));
+    });
+    emailInput.addEventListener("input", function () {
+      if (emailError && !emailError.classList.contains("hidden")) {
+        setFieldValidationUI(emailInput, emailError, validateEmail(emailInput.value));
+      }
+    });
+  }
+
+  if (phoneInput) {
+    phoneInput.addEventListener("blur", function () {
+      setFieldValidationUI(phoneInput, phoneError, validatePhone(phoneInput.value));
+    });
+    phoneInput.addEventListener("input", function () {
+      if (phoneError && !phoneError.classList.contains("hidden")) {
+        setFieldValidationUI(phoneInput, phoneError, validatePhone(phoneInput.value));
+      }
+    });
+  }
+}
+
 async function handleHeroSubmit(event) {
   event.preventDefault();
   const submitBtn = document.getElementById("leadSubmitBtn");
@@ -198,19 +299,34 @@ async function handleHeroSubmit(event) {
     errorBanner.textContent = "";
   }
 
-  const name = (document.getElementById("leadName").value || "").trim();
-  const email = (document.getElementById("leadEmail").value || "").trim();
-  const phone = (document.getElementById("leadPhone").value || "").trim();
+  const nameInput = document.getElementById("leadName");
+  const emailInput = document.getElementById("leadEmail");
+  const phoneInput = document.getElementById("leadPhone");
+
+  const nameError = document.getElementById("leadNameError");
+  const emailError = document.getElementById("leadEmailError");
+  const phoneError = document.getElementById("leadPhoneError");
+
+  const name = (nameInput ? nameInput.value : "").trim();
+  const email = (emailInput ? emailInput.value : "").trim();
+  const phone = (phoneInput ? phoneInput.value : "").trim();
   const message = (document.getElementById("leadMessage") ? document.getElementById("leadMessage").value : "").trim();
   const serviceInput = document.getElementById("selectedService");
   const service = serviceInput ? serviceInput.value : "Mobile App (iOS/Android)";
   const modules = getSelectedModules();
 
-  if (!name || !email || !phone) {
-    if (errorBanner) {
-      errorBanner.textContent = "Please fill in all required fields (Name, Email, and Phone).";
-      errorBanner.classList.remove("hidden");
-    }
+  const nameValError = validateName(name);
+  const emailValError = validateEmail(email);
+  const phoneValError = validatePhone(phone);
+
+  setFieldValidationUI(nameInput, nameError, nameValError);
+  setFieldValidationUI(emailInput, emailError, emailValError);
+  setFieldValidationUI(phoneInput, phoneError, phoneValError);
+
+  if (nameValError || emailValError || phoneValError) {
+    if (nameValError && nameInput) nameInput.focus();
+    else if (emailValError && emailInput) emailInput.focus();
+    else if (phoneValError && phoneInput) phoneInput.focus();
     return;
   }
 
@@ -256,10 +372,22 @@ async function handleHeroSubmit(event) {
     } else {
       const errData = await response.json().catch(() => ({}));
       const msg = errData.detail || "Unable to submit your architecture brief. Please try again or chat via WhatsApp.";
-      if (errorBanner) {
+      const errField = errData.field || "";
+
+      if (errField === "phone" && phoneInput) {
+        setFieldValidationUI(phoneInput, phoneError, msg);
+        phoneInput.focus();
+      } else if (errField === "email" && emailInput) {
+        setFieldValidationUI(emailInput, emailError, msg);
+        emailInput.focus();
+      } else if (errField === "name" && nameInput) {
+        setFieldValidationUI(nameInput, nameError, msg);
+        nameInput.focus();
+      } else if (errorBanner) {
         errorBanner.textContent = msg;
         errorBanner.classList.remove("hidden");
       }
+
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.innerHTML = `<span>GET FIXED ARCHITECTURE QUOTE</span>`;
@@ -436,4 +564,8 @@ document.addEventListener("keydown", function (e) {
   if (e.key === "Escape") {
     closeModalDirect();
   }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  setupFormValidationListeners();
 });
