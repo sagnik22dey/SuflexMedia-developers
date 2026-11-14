@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Test User",
+    "email": "test@example.com",
+    "phone": "+919876543210",
+    "service": "Android App Development",
+    "budget": "",
+    "message": "",
+    "submitted_at": "2026-11-14T16:15:12.937261Z"
+  },
+  {
+    "name": "Test Lead",
+    "email": "test@example.com",
+    "phone": "+919876543210",
+    "service": "Mobile App (iOS/Android)",
+    "budget": "Custom Scope",
+    "message": "Automated validation test",
+    "submitted_at": "2026-11-14T16:32:17.750847Z"
+  }
+]

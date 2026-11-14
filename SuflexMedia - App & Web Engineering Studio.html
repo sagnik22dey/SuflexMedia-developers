@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuflexMedia — Application Development & High-Velocity Web Engineering Studio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans, Inter, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        obsidian: '#06070B',
+                        slateCard: '#0D1017',
+                        slateElevated: '#141924',
+                        indigoBrand: '#6366F1',
+                        acidLime: '#A3E635',
+                        emeraldMint: '#10B981',
+                    },
+                    animation: {
+                        'marquee': 'marquee 34s linear infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Kinetic Studio & Architectural Dark Mode Styles */
+        :root {
+            --bg-primary: #06070B;
+            --card-bg: rgba(13, 16, 23, 0.85);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --accent-primary: #6366F1;
+            --accent-secondary: #A3E635;
+        }
+
+        body.blueprint-mode {
+            --bg-primary: #070D19;
+            --card-bg: rgba(10, 20, 38, 0.9);
+            --border-subtle: rgba(99, 102, 241, 0.25);
+            background-image: 
+                radial-gradient(circle at 20% 10%, rgba(99, 102, 241, 0.16) 0%, transparent 40%),
+                radial-gradient(circle at 80% 30%, rgba(163, 230, 53, 0.1) 0%, transparent 40%),
+                linear-gradient(to right, rgba(99, 102, 241, 0.08) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(99, 102, 241, 0.08) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: #F8FAFC;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease;
+            background-image: 
+                radial-gradient(circle at 12% 12%, rgba(99, 102, 241, 0.12) 0%, transparent 38%),
+                radial-gradient(circle at 88% 22%, rgba(163, 230, 53, 0.08) 0%, transparent 40%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 56px 56px, 56px 56px;
+        }
+
+        .swiss-border {
+            border: 1px solid var(--border-subtle);
+        }
+        .swiss-border-t {
+            border-top: 1px solid var(--border-subtle);
+        }
+        .swiss-border-b {
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .glow-card {
+            transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid var(--border-subtle);
+            background: linear-gradient(180deg, rgba(20, 25, 36, 0.72) 0%, rgba(13, 16, 23, 0.94) 100%);
+        }
+        .glow-card:hover {
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 14px 40px -12px rgba(99, 102, 241, 0.22), 0 0 0 1px rgba(163, 230, 53, 0.18);
+            transform: translateY(-3px);
+        }
+
+        /* Active Pill & Checkbox States */
+        .config-pill.active {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(163, 230, 53, 0.15) 100%);
+            border-color: #A3E635;
+            color: #F8FAFC;
+            box-shadow: 0 0 20px rgba(163, 230, 53, 0.2);
+        }
+
+        .platform-chip.active {
+            background-color: rgba(99, 102, 241, 0.2);
+            border-color: #6366F1;
+            color: #A5B4FC;
+        }
+
+        .addon-chip.active {
+            background-color: rgba(163, 230, 53, 0.16);
+            border-color: #A3E635;
+            color: #D9F99D;
+        }
+
+        .marquee-container:hover .marquee-content {
+            animation-play-state: paused;
+        }
+
+        .corner-plus {
+            position: relative;
+        }
+        .corner-plus::before,
+        .corner-plus::after {
+            content: '+';
+            position: absolute;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: rgba(163, 230, 53, 0.45);
+            line-height: 1;
+            pointer-events: none;
+        }
+        .corner-plus::before { top: -6px; left: -5px; }
+        .corner-plus::after { bottom: -6px; right: -5px; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #06070B; }
+        ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6366F1; }
+    </style>
+</head>
+<body class="antialiased selection:bg-indigoBrand selection:text-white">
+
+    <!-- Top Technical Telemetry Bar -->
+    <div class="w-full bg-obsidian/95 swiss-border-b py-2 px-4 sm:px-8 text-xs font-mono text-slate-400 flex flex-wrap items-center justify-between gap-2 z-50 relative">
+        <div class="flex items-center gap-3">
+            <span class="inline-flex items-center gap-1.5 text-acidLime font-medium">
+                <span class="w-2 h-2 rounded-full bg-acidLime animate-ping"></span>
+                SUFLEXMEDIA ENGINEERING GRID
+            </span>
+            <span class="hidden md:inline text-slate-600">|</span>
+            <span class="hidden md:inline text-slate-300">APP &amp; WEB ARCHITECTURE STUDIO · ACCEPTING Q4/Q1 BUILDS</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <!-- View Mode Toggle: Obsidian vs Blueprint Grid -->
+            <button onclick="toggleBlueprintMode()" id="blueprintToggleBtn" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-indigoBrand/15 border border-indigoBrand/40 text-indigo-300 hover:text-white transition cursor-pointer">
+                <span>⊞</span>
+                <span id="blueprintToggleLabel">Blueprint Grid: OFF</span>
+            </button>
+            <span class="hidden sm:inline text-slate-300">★ 4.9/5.0 (120+ Shipped Builds)</span>
+        </div>
+    </div>
+
+    <!-- 1. Sticky Glassmorphic Header -->
+    <header class="sticky top-0 z-40 backdrop-blur-xl bg-obsidian/85 swiss-border-b transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            <!-- SuflexMedia Brand Logo -->
+            <a href="#home" class="flex items-center gap-3 group focus:outline-none">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-indigoBrand via-indigo-500 to-acidLime p-[1.5px] shadow-lg shadow-indigoBrand/25 group-hover:shadow-acidLime/30 transition-all">
+                    <div class="w-full h-full bg-obsidian rounded-[10px] flex items-center justify-center">
+                        <!-- Custom SuflexMedia Geometric S-Cube SVG -->
+                        <svg class="w-6 h-6 text-acidLime group-hover:rotate-12 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" stroke="#6366F1"/>
+                            <path d="M8 10.5L12 8l4 2.5-4 2.5-4-2.5z" fill="#A3E635" stroke="#A3E635"/>
+                            <path d="M8 14.5l4 2.5 4-2.5" stroke="#A3E635" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="font-display font-extrabold text-xl sm:text-2xl tracking-tight text-white">Suflex<span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-acidLime">Media</span></span>
+                        <span class="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-indigoBrand/20 text-indigo-300 border border-indigoBrand/40 font-semibold">STUDIO</span>
+                    </div>
+                    <p class="text-[11px] font-mono text-slate-400 hidden sm:block">Application &amp; Web Engineering</p>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden lg:flex items-center gap-1 bg-slateCard/90 swiss-border rounded-full px-3 py-1.5">
+                <a href="#facilities" class="px-3.5 py-1.5 rounded-full text-sm font-medium text-slate-200 hover:text-acidLime hover:bg-white/5 transition">App &amp; Web Facilities</a>
+                <a href="#estimator" class="px-3.5 py-1.5 rounded-full text-sm font-medium text-slate-200 hover:text-acidLime hover:bg-white/5 transition">Cost Calculator</a>
+                <a href="#portfolio" class="px-3.5 py-1.5 rounded-full text-sm font-medium text-slate-200 hover:text-acidLime hover:bg-white/5 transition">Featured Work</a>
+                <a href="#process" class="px-3.5 py-1.5 rounded-full text-sm font-medium text-slate-200 hover:text-acidLime hover:bg-white/5 transition">Sprint Process</a>
+                <a href="#faq" class="px-3.5 py-1.5 rounded-full text-sm font-medium text-slate-200 hover:text-acidLime hover:bg-white/5 transition">FAQ</a>
+            </nav>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-2.5 sm:gap-3">
+                <a href="https://wa.me/917416025999?text=Hi%20SuflexMedia%20team%2C%20I%20want%20to%20discuss%20an%20App%20or%20Website%20project." target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slateCard hover:bg-slateElevated swiss-border text-xs sm:text-sm font-mono text-slate-200 hover:border-acidLime/50 transition">
+                    <span class="w-2 h-2 rounded-full bg-acidLime"></span>
+                    WhatsApp Studio
+                </a>
+                <button onclick="openQuoteModal('Start a Project — Header CTA')" class="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigoBrand to-indigo-500 hover:from-indigo-500 hover:to-indigoBrand text-white font-display font-bold text-xs sm:text-sm shadow-lg shadow-indigoBrand/25 hover:shadow-indigoBrand/40 transition-all active:scale-95 cursor-pointer">
+                    <span>Start a Project</span>
+                    <span class="text-acidLime">→</span>
+                </button>
+                <button onclick="toggleMobileMenu()" class="lg:hidden p-2.5 rounded-xl bg-slateCard swiss-border text-slate-300 hover:text-white" aria-label="Toggle Mobile Navigation">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobileMenuDrawer" class="hidden lg:hidden bg-slateCard/95 backdrop-blur-xl swiss-border-b px-4 pt-3 pb-6 space-y-3">
+            <div class="grid grid-cols-2 gap-2">
+                <a href="#facilities" onclick="toggleMobileMenu()" class="px-3 py-2.5 rounded-lg bg-obsidian/70 text-sm font-medium text-slate-200">App &amp; Web Facilities</a>
+                <a href="#estimator" onclick="toggleMobileMenu()" class="px-3 py-2.5 rounded-lg bg-obsidian/70 text-sm font-medium text-slate-200">Scope Calculator</a>
+                <a href="#portfolio" onclick="toggleMobileMenu()" class="px-3 py-2.5 rounded-lg bg-obsidian/70 text-sm font-medium text-slate-200">Shipped Builds (8)</a>
+                <a href="#process" onclick="toggleMobileMenu()" class="px-3 py-2.5 rounded-lg bg-obsidian/70 text-sm font-medium text-slate-200">Sprint Process</a>
+                <a href="#faq" onclick="toggleMobileMenu()" class="px-3 py-2.5 rounded-lg bg-obsidian/70 text-sm font-medium text-slate-200">FAQ</a>
+                <a href="tel:+917416025999" class="px-3 py-2.5 rounded-lg bg-indigoBrand/15 border border-indigoBrand/40 text-sm font-mono text-acidLime flex items-center gap-1.5">
+                    📞 Direct Call
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. Hero Section (Split Asymmetric Layout for SuflexMedia) -->
+    <section id="home" class="relative pt-10 pb-16 md:py-24 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                
+                <!-- Left Column (7 Cols): Flagship App & Web Value Proposition -->
+                <div class="lg:col-span-7 space-y-6 sm:space-y-8">
+                    <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-indigoBrand/15 border border-indigoBrand/40 text-indigo-300 font-mono text-xs tracking-wider uppercase">
+                        <span class="w-2 h-2 rounded-full bg-acidLime animate-pulse"></span>
+                        <span>SUFLEXMEDIA · MOBILE APPS &amp; WEB PLATFORMS</span>
+                    </div>
+
+                    <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.06]">
+                        Engineered <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-indigo-300 to-acidLime">Mobile Apps</span> &amp; High-Velocity <span class="underline decoration-acidLime/60 decoration-wavy underline-offset-8">Websites.</span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg lg:text-xl text-slate-300 max-w-2xl leading-relaxed">
+                        SuflexMedia is a dedicated dual-facility digital engineering studio. We architect native &amp; cross-platform <strong class="text-white">iOS/Android Applications</strong> alongside sub-second <strong class="text-white">Next.js Websites, E-Commerce Stores &amp; SaaS Portals</strong> — shipped on fixed milestones with 100% IP ownership.
+                    </p>
+
+                    <!-- Dual Action CTAs -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
+                        <a href="#estimator" class="inline-flex items-center justify-center gap-3 px-7 py-4 rounded-xl bg-acidLime hover:bg-lime-300 text-obsidian font-display font-extrabold text-base shadow-xl shadow-acidLime/15 transition-all">
+                            <span>Configure Your Build →</span>
+                        </a>
+                        <a href="#facilities" class="inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-xl bg-slateCard hover:bg-slateElevated swiss-border hover:border-indigoBrand/50 text-white font-display font-semibold text-base transition-all">
+                            <span>Explore App &amp; Web Facilities</span>
+                            <span class="font-mono text-xs text-indigo-400">[01 / 02]</span>
+                        </a>
+                    </div>
+
+                    <!-- Live Engineering Telemetry Metrics Bar -->
+                    <div class="pt-6 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div class="p-3 rounded-xl bg-slateCard/60 swiss-border">
+                            <div class="font-mono font-extrabold text-xl sm:text-2xl text-acidLime">99.98%</div>
+                            <div class="text-xs text-slate-400 font-mono mt-0.5">Crash-Free Mobile Apps</div>
+                        </div>
+                        <div class="p-3 rounded-xl bg-slateCard/60 swiss-border">
+                            <div class="font-mono font-extrabold text-xl sm:text-2xl text-indigo-400">&lt;0.8s</div>
+                            <div class="text-xs text-slate-400 font-mono mt-0.5">Web LCP Load Speed</div>
+                        </div>
+                        <div class="p-3 rounded-xl bg-slateCard/60 swiss-border">
+                            <div class="font-mono font-extrabold text-xl sm:text-2xl text-white">120+</div>
+                            <div class="text-xs text-slate-400 font-mono mt-0.5">Apps &amp; Sites Shipped</div>
+                        </div>
+                        <div class="p-3 rounded-xl bg-slateCard/60 swiss-border">
+                            <div class="font-mono font-extrabold text-xl sm:text-2xl text-emerald-400">100%</div>
+                            <div class="text-xs text-slate-400 font-mono mt-0.5">Source Code Ownership</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column (5 Cols): Interactive App & Web Project Configurator Card -->
+                <div class="lg:col-span-5">
+                    <div class="glow-card rounded-2xl p-6 sm:p-8 relative corner-plus">
+                        <div class="flex items-center justify-between pb-4 mb-5 border-b border-white/10">
+                            <div>
+                                <span class="font-mono text-[11px] uppercase tracking-widest text-acidLime block">● INSTANT ARCHITECTURE BRIEF</span>
+                                <h2 class="font-display font-bold text-xl sm:text-2xl text-white mt-0.5">Scope Your App or Website</h2>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-md bg-indigoBrand/20 border border-indigoBrand/40 font-mono text-[11px] text-indigo-300 shrink-0">
+                                Fixed Quote
+                            </span>
+                        </div>
+
+                        <form id="heroQuoteForm" onsubmit="handleHeroQuoteSubmit(event)" class="space-y-4">
+                            <!-- Primary Facility Focus Pills -->
+                            <div>
+                                <label class="block font-mono text-xs uppercase tracking-wider text-slate-400 mb-2">
+                                    1. Select Primary Build Type <span class="text-acidLime">*</span>
+                                </label>
+                                <div class="grid grid-cols-2 gap-2" id="heroNeedPills">
+                                    <button type="button" onclick="toggleNeedPill(this)" data-value="Mobile App (iOS/Android)" class="config-pill active px-3 py-2.5 rounded-xl text-xs font-medium swiss-border bg-obsidian/80 text-left flex items-center gap-2 transition cursor-pointer">
+                                        <span>📱</span>
+                                        <span>Mobile App (iOS/Android)</span>
+                                    </button>
+                                    <button type="button" onclick="toggleNeedPill(this)" data-value="Custom Website / Web App" class="config-pill active px-3 py-2.5 rounded-xl text-xs font-medium swiss-border bg-obsidian/80 text-left flex items-center gap-2 transition cursor-pointer">
+                                        <span>🌐</span>
+                                        <span>Website / Next.js Web App</span>
+                                    </button>
+                                    <button type="button" onclick="toggleNeedPill(this)" data-value="App + Web Ecosystem" class="config-pill px-3 py-2.5 rounded-xl text-xs font-medium swiss-border bg-obsidian/80 text-left flex items-center gap-2 transition cursor-pointer">
+                                        <span>⚡</span>
+                                        <span>Full App + Web Ecosystem</span>
+                                    </button>
+                                    <button type="button" onclick="toggleNeedPill(this)" data-value="E-Commerce / SaaS Portal" class="config-pill px-3 py-2.5 rounded-xl text-xs font-medium swiss-border bg-obsidian/80 text-left flex items-center gap-2 transition cursor-pointer">
+                                        <span>🛍️</span>
+                                        <span>E-Commerce / SaaS Portal</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Target Platforms Check-Chips -->
+                            <div>
+                                <label class="block font-mono text-xs uppercase tracking-wider text-slate-400 mb-2">
+                                    2. Target Platforms &amp; Stack
+                                </label>
+                                <div class="flex flex-wrap gap-1.5" id="heroPlatformChips">
+                                    <button type="button" onclick="togglePlatformChip(this)" data-platform="iOS App" class="platform-chip active px-2.5 py-1 rounded-lg font-mono text-[11px] swiss-border bg-obsidian/60 text-slate-300 cursor-pointer">✓ iOS</button>
+                                    <button type="button" onclick="togglePlatformChip(this)" data-platform="Android App" class="platform-chip active px-2.5 py-1 rounded-lg font-mono text-[11px] swiss-border bg-obsidian/60 text-slate-300 cursor-pointer">✓ Android</button>
+                                    <button type="button" onclick="togglePlatformChip(this)" data-platform="Next.js Website" class="platform-chip active px-2.5 py-1 rounded-lg font-mono text-[11px] swiss-border bg-obsidian/60 text-slate-300 cursor-pointer">✓ Next.js Web</button>
+                                    <button type="button" onclick="togglePlatformChip(this)" data-platform="Admin CMS" class="platform-chip px-2.5 py-1 rounded-lg font-mono text-[11px] swiss-border bg-obsidian/60 text-slate-300 cursor-pointer">+ Admin Panel</button>
+                                    <button type="button" onclick="togglePlatformChip(this)" data-platform="Cloud API" class="platform-chip px-2.5 py-1 rounded-lg font-mono text-[11px] swiss-border bg-obsidian/60 text-slate-300 cursor-pointer">+ Cloud API</button>
+                                </div>
+                            </div>
+
+                            <!-- Name & Phone Inputs -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                                <div>
+                                    <label for="heroName" class="block font-mono text-[11px] uppercase tracking-wider text-slate-400 mb-1">Your Name *</label>
+                                    <input id="heroName" type="text" required placeholder="Rohan Sharma" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian/90 swiss-border text-white placeholder-slate-500 text-sm focus:outline-none focus:border-indigoBrand transition">
+                                </div>
+                                <div>
+                                    <label for="heroPhone" class="block font-mono text-[11px] uppercase tracking-wider text-slate-400 mb-1">Phone / WhatsApp *</label>
+                                    <input id="heroPhone" type="tel" required placeholder="+91 98765 43210" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian/90 swiss-border text-white placeholder-slate-500 text-sm font-mono focus:outline-none focus:border-indigoBrand transition">
+                                </div>
+                            </div>
+
+                            <!-- Submit CTA -->
+                            <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-indigoBrand via-indigo-500 to-emeraldMint hover:opacity-95 text-white font-display font-extrabold text-sm sm:text-base shadow-lg shadow-indigoBrand/25 transition-all flex items-center justify-center gap-2 cursor-pointer">
+                                <span>Get Fixed Quote &amp; Architecture Plan →</span>
+                            </button>
+
+                            <div class="flex items-center justify-between text-[11px] text-slate-400 font-mono pt-1">
+                                <span>🔒 NDA-Protected Inquiry</span>
+                                <span class="text-acidLime">Response in ~15 mins</span>
+                            </div>
+                        </form>
+
+                        <!-- Confirmation State -->
+                        <div id="heroSuccessState" class="hidden py-8 text-center space-y-4">
+                            <div class="w-14 h-14 rounded-2xl bg-acidLime/20 border border-acidLime/40 text-acidLime mx-auto flex items-center justify-center text-2xl">
+                                ✓
+                            </div>
+                            <h3 class="font-display font-bold text-xl text-white">Architecture Brief Logged!</h3>
+                            <p class="text-sm text-slate-300 max-w-xs mx-auto" id="heroSuccessSummary">
+                                A SuflexMedia Solutions Architect will reach out shortly with your custom App/Web roadmap and fixed quote.
+                            </p>
+                            <button onclick="resetHeroForm()" class="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-xs font-mono text-acidLime transition cursor-pointer">
+                                Configure Another Build
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Infinite Kinetic Marquee Ticker -->
+    <div class="w-full bg-slateCard/95 swiss-border-t swiss-border-b py-4 overflow-hidden marquee-container">
+        <div class="flex whitespace-nowrap marquee-content animate-marquee font-display font-semibold text-sm sm:text-base text-slate-200 tracking-wide">
+            <div class="flex items-center gap-8 mx-4">
+                <span>📱 iOS &amp; Android Native Apps</span>
+                <span class="text-acidLime">✦</span>
+                <span>⚡ Flutter &amp; React Native Ecosystems</span>
+                <span class="text-indigo-400">✦</span>
+                <span>🌐 Next.js &amp; React Web Applications</span>
+                <span class="text-acidLime">✦</span>
+                <span>🚀 High-Converting Custom Websites</span>
+                <span class="text-indigo-400">✦</span>
+                <span>🛍️ Headless E-Commerce &amp; UPI Checkouts</span>
+                <span class="text-acidLime">✦</span>
+                <span>☁️ Scalable Node/Go Cloud Backends</span>
+                <span class="text-indigo-400">✦</span>
+                <span>🎨 Interactive UI/UX Design Systems</span>
+                <span class="text-acidLime">✦</span>
+                <span>📡 Real-Time WebSockets &amp; Live GPS</span>
+                <span class="text-indigo-400">✦</span>
+                <span>🏆 99+ Core Web Vitals &amp; Technical SEO</span>
+                <span class="text-acidLime">✦</span>
+            </div>
+            <div class="flex items-center gap-8 mx-4" aria-hidden="true">
+                <span>📱 iOS &amp; Android Native Apps</span>
+                <span class="text-acidLime">✦</span>
+                <span>⚡ Flutter &amp; React Native Ecosystems</span>
+                <span class="text-indigo-400">✦</span>
+                <span>🌐 Next.js &amp; React Web Applications</span>
+                <span class="text-acidLime">✦</span>
+                <span>🚀 High-Converting Custom Websites</span>
+                <span class="text-indigo-400">✦</span>
+                <span>🛍️ Headless E-Commerce &amp; UPI Checkouts</span>
+                <span class="text-acidLime">✦</span>
+                <span>☁️ Scalable Node/Go Cloud Backends</span>
+                <span class="text-indigo-400">✦</span>
+                <span>🎨 Interactive UI/UX Design Systems</span>
+                <span class="text-acidLime">✦</span>
+                <span>📡 Real-Time WebSockets &amp; Live GPS</span>
+                <span class="text-indigo-400">✦</span>
+                <span>🏆 99+ Core Web Vitals &amp; Technical SEO</span>
+                <span class="text-acidLime">✦</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Core Facilities Spotlight: Dual-Engine Application & Website Development Facilities -->
+    <section id="facilities" class="py-20 sm:py-28 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14">
+                <div>
+                    <div class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-acidLime mb-3">
+                        <span>● CORE ENGINEERING FACILITIES</span>
+                    </div>
+                    <h2 class="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight">
+                        Two Specialized Studios. <span class="text-indigo-400">One Unified Team.</span>
+                    </h2>
+                </div>
+                <p class="text-slate-400 text-sm sm:text-base max-w-md">
+                    Whether you need a consumer-grade mobile app on the App Store or a blazing-fast web platform that dominates Google and converts traffic, SuflexMedia builds both under one roof.
+                </p>
+            </div>
+
+            <!-- Dual-Facility Interactive Architecture Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- FACILITY 01: APPLICATION DEVELOPMENT STUDIO -->
+                <div class="glow-card rounded-3xl p-6 sm:p-9 flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-indigoBrand/15 blur-3xl pointer-events-none"></div>
+                    
+                    <div>
+                        <!-- Top Facility Badge -->
+                        <div class="flex items-center justify-between gap-2 mb-6">
+                            <span class="px-3 py-1 rounded-lg bg-indigoBrand/20 border border-indigoBrand/40 font-mono text-xs font-bold text-indigo-300">
+                                FACILITY 01 // APPLICATION DEVELOPMENT
+                            </span>
+                            <span class="font-mono text-xs text-acidLime">iOS · Android · Cross-Platform</span>
+                        </div>
+
+                        <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-white mb-2">
+                            Mobile Application Engineering
+                        </h3>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+                            From consumer super-apps and on-demand delivery networks to enterprise workforce mobility — we engineer silky-smooth 60fps mobile experiences with offline resilience and bank-grade security.
+                        </p>
+
+                        <!-- Interactive Mobile Simulator Previewer -->
+                        <div class="rounded-2xl bg-obsidian/90 swiss-border p-4 sm:p-5 mb-7">
+                            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-white/10">
+                                <span class="font-mono text-[11px] uppercase text-slate-400">Interactive App Viewport:</span>
+                                <div class="flex items-center gap-1.5">
+                                    <button type="button" onclick="switchAppPreview('fintech', this)" class="app-preview-btn px-2.5 py-1 rounded-md font-mono text-[11px] bg-indigoBrand text-white font-semibold cursor-pointer">FinTech &amp; UPI</button>
+                                    <button type="button" onclick="switchAppPreview('ondemand', this)" class="app-preview-btn px-2.5 py-1 rounded-md font-mono text-[11px] bg-white/5 text-slate-300 hover:text-white cursor-pointer">On-Demand GPS</button>
+                                    <button type="button" onclick="switchAppPreview('telehealth', this)" class="app-preview-btn px-2.5 py-1 rounded-md font-mono text-[11px] bg-white/5 text-slate-300 hover:text-white cursor-pointer">Telemedicine</button>
+                                </div>
+                            </div>
+
+                            <!-- Simulated Phone Frame Screen -->
+                            <div id="appViewportScreen" class="rounded-xl bg-gradient-to-br from-indigo-950/70 via-slateCard to-obsidian p-4 border border-indigoBrand/30 min-h-[160px] flex flex-col justify-between">
+                                <!-- Populated dynamically by switchAppPreview() -->
+                            </div>
+                        </div>
+
+                        <!-- Capabilities Checklist -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-xs sm:text-sm text-slate-200">
+                            <div class="flex items-start gap-2.5 p-3 rounded-xl bg-obsidian/50 swiss-border">
+                                <span class="text-acidLime font-mono font-bold">01</span>
+                                <div>
+                                    <strong class="block text-white">Native &amp; Cross-Platform</strong>
+                                    <span class="text-xs text-slate-400">Swift (iOS), Kotlin (Android), Flutter &amp; React Native</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-2.5 p-3 rounded-xl bg-obsidian/50 swiss-border">
+                                <span class="text-acidLime font-mono font-bold">02</span>
+                                <div>
+                                    <strong class="block text-white">Real-Time &amp; Live GPS</strong>
+                                    <span class="text-xs text-slate-400">WebSockets, live rider tracking, geofencing &amp; maps</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-2.5 p-3 rounded-xl bg-obsidian/50 swiss-border">
+                                <span class="text-acidLime font-mono font-bold">03</span>
+                                <div>
+                                    <strong class="block text-white">Offline-First &amp; Biometrics</strong>
+                                    <span class="text-xs text-slate-400">Local SQLite sync, FaceID/TouchID &amp; push engines</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-2.5 p-3 rounded-xl bg-obsidian/50 swiss-border">
+                                <span class="text-acidLime font-mono font-bold">04</span>
+                                <div>
+                                    <strong class="block text-white">Store Launch Handover</strong>
+                                    <span class="text-xs text-slate-400">Full Apple App Store &amp; Google Play compliance</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="openQuoteModal('Facility 01: Mobile Application Development')" class="w-full py-4 px-5 rounded-xl bg-indigoBrand hover:bg-indigo-500 text-white font-display font-bold text-sm transition flex items-center justify-between shadow-lg shadow-indigoBrand/25 cursor-pointer">
+                        <span>Scope Your Mobile Application</span>
+                        <span class="font-mono text-acidLime">→</span>
+                    </button>
+                </div>
+
+                <!-- FACILITY 02: WEBSITE & WEB APPLICATION DEVELOPMENT STUDIO -->
+                <div class="glow-card rounded-3xl p-6 sm:p-9 flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-acidLime/10 blur-3xl pointer-events-none"></div>
+                    
+                    <div>
+                        <!-- Top Facility Badge -->
+                        <div class="flex items-center justify-between gap-2 mb-6">
+                            <span class="px-3 py-1 rounded-lg bg-acidLime/15 border border-acidLime/40 font-mono text-xs font-bold text-acidLime">
+                                FACILITY 02 // WEBSITE &amp; WEB APP STUDIO
+                            </span>
+                            <span class="font-mono text-xs text-indigo-300">Next.js · React · E-Commerce · SaaS</span>
+                        </div>
+
+                        <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-white mb-2">
+                            Website &amp; Web Platform Architecture
+                        </h3>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+                            We don't build sluggish templates. We engineer high-converting custom brand websites, headless e-commerce storefronts, and complex SaaS web portals engineered for 99+ Google PageSpeed.
+                        </p>
+
+                        <!-- Interactive Browser Viewport Simulator -->
+                        <div class="rounded-2xl bg-obsidian/90 swiss-border p-4 sm:p-5 mb-7">
+                            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-white/10">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500/70"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500/70"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/70"></span>
+                                    <span class="font-mono text-[11px] uppercase text-slate-400 ml-1.5">Web Viewport:</span>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <button type="button" onclick="switchWebPreview('saas', this)" class="web-preview-btn px-2.5 py-1 rounded-md font-mono text-[11px] bg-acidLime text-obsidian font-bold cursor-pointer">SaaS Web App</button>
+                                    <button type="button" onclick="switchWebPreview('ecommerce', this)" class="web-preview-btn px-2.5 py-1 rounded-md font-mono text-[11px] bg-white/5 text-slate-300 hover:text-white cursor-pointer">Headless Store</button>
+                                    <button type="button" onclick="switchWebPreview('corporate', this)" class="web-preview-btn px-2.5 py-1 rounded-md font-mono text-[11px] bg-white/5 text-slate-300 hover:text-white cursor-pointer">Brand Website</button>
+                                </div>
+                            </div>
+
+                            <!-- Simulated Browser Frame Screen -->
+                            <div id="webViewportScreen" class="rounded-xl bg-gradient-to-br from-emerald-950/60 via-slateCard to-obsidian p-4 border border-acidLime/30 min-h-[160px] flex flex-col justify-between">
+                                <!-- Populated dynamically by switchWebPreview() -->
+                            </div>
+                        </div>
+
+                        <!-- Capabilities Checklist -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-xs sm:text-sm text-slate-200">
+                            <div class="flex items-start gap-2.5 p-3 rounded-xl bg-obsidian/50 swiss-border">
+                                <span class="text-indigo-400 font-mono font-bold">01</span>
+                                <div>
+                                    <strong class="block text-white">Next.js &amp; React Web Apps</strong>
+                                    <span class="text-xs text-slate-400">SSR/ISR architecture, instant page transitions &amp; PWAs</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-2.5 p-3 rounded-xl bg-obsidian/50 swiss-border">
+                                <span class="text-indigo-400 font-mono font-bold">02</span>
+                                <div>
+                                    <strong class="block text-white">Custom E-Commerce &amp; UPI</strong>
+                                    <span class="text-xs text-slate-400">Razorpay, Stripe, PhonePe, inventory &amp; GST billing</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-2.5 p-3 rounded-xl bg-obsidian/50 swiss-border">
+                                <span class="text-indigo-400 font-mono font-bold">03</span>
+                                <div>
+                                    <strong class="block text-white">SaaS Portals &amp; ERP Panels</strong>
+                                    <span class="text-xs text-slate-400">Role-based access, live analytics &amp; CRM workflows</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-2.5 p-3 rounded-xl bg-obsidian/50 swiss-border">
+                                <span class="text-indigo-400 font-mono font-bold">04</span>
+                                <div>
+                                    <strong class="block text-white">99+ Core Web Vitals SEO</strong>
+                                    <span class="text-xs text-slate-400">Schema markup, sub-second LCP &amp; lead conversion</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="openQuoteModal('Facility 02: Website & Web Application Development')" class="w-full py-4 px-5 rounded-xl bg-acidLime hover:bg-lime-300 text-obsidian font-display font-extrabold text-sm transition flex items-center justify-between shadow-lg shadow-acidLime/20 cursor-pointer">
+                        <span>Scope Your Website or Web App</span>
+                        <span class="font-mono">→</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Interactive App & Web Scope & Cost Estimator Widget -->
+    <section id="estimator" class="py-20 sm:py-24 bg-slateCard/50 swiss-border-t swiss-border-b relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <div class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-acidLime mb-3">
+                    <span>● INTERACTIVE ARCHITECTURE ESTIMATOR</span>
+                </div>
+                <h2 class="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight">
+                    Calculate Your App &amp; Web Sprint Roadmap
+                </h2>
+                <p class="text-slate-400 text-sm sm:text-base mt-3">
+                    Configure your target platforms, scale tier, and feature modules below to inspect recommended tech stacks and delivery timelines.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Left Configurator Controls (7 Cols) -->
+                <div class="lg:col-span-7 glow-card rounded-2xl p-6 sm:p-8 space-y-7">
+                    
+                    <!-- Step A: Platform Selection -->
+                    <div>
+                        <label class="block font-mono text-xs uppercase tracking-wider text-indigo-300 mb-3">
+                            STEP 01 // SELECT FACILITY ARCHITECTURE
+                        </label>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="calcFacilityGroup">
+                            <button type="button" onclick="updateEstimator('facility', 'web')" data-val="web" class="calc-facility-btn p-4 rounded-xl swiss-border bg-obsidian/80 text-left transition cursor-pointer">
+                                <div class="font-mono text-xs text-acidLime mb-1">WEB ONLY</div>
+                                <div class="font-display font-bold text-white text-sm">Website / Web App</div>
+                                <div class="text-[11px] text-slate-400 mt-1">Next.js, React, E-Com, CMS</div>
+                            </button>
+                            <button type="button" onclick="updateEstimator('facility', 'app')" data-val="app" class="calc-facility-btn p-4 rounded-xl swiss-border bg-obsidian/80 text-left transition cursor-pointer">
+                                <div class="font-mono text-xs text-indigo-400 mb-1">MOBILE ONLY</div>
+                                <div class="font-display font-bold text-white text-sm">iOS &amp; Android App</div>
+                                <div class="text-[11px] text-slate-400 mt-1">Flutter / React Native / Native</div>
+                            </button>
+                            <button type="button" onclick="updateEstimator('facility', 'both')" data-val="both" class="calc-facility-btn active config-pill p-4 rounded-xl swiss-border bg-obsidian/80 text-left transition cursor-pointer">
+                                <div class="font-mono text-xs text-acidLime mb-1">UNIFIED ECOSYSTEM</div>
+                                <div class="font-display font-bold text-white text-sm">Mobile App + Web Platform</div>
+                                <div class="text-[11px] text-slate-300 mt-1">Apps + Website + Admin API</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step B: Scale & Complexity Tier -->
+                    <div>
+                        <label class="block font-mono text-xs uppercase tracking-wider text-indigo-300 mb-3">
+                            STEP 02 // SELECT ENGINEERING SCALE TIER
+                        </label>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="calcTierGroup">
+                            <button type="button" onclick="updateEstimator('tier', 'mvp')" data-val="mvp" class="calc-tier-btn p-4 rounded-xl swiss-border bg-obsidian/80 text-left transition cursor-pointer">
+                                <div class="font-display font-bold text-white text-sm">MVP Launchpad</div>
+                                <div class="text-[11px] text-slate-400 mt-1">Core flows, fast go-to-market</div>
+                            </button>
+                            <button type="button" onclick="updateEstimator('tier', 'growth')" data-val="growth" class="calc-tier-btn active config-pill p-4 rounded-xl swiss-border bg-obsidian/80 text-left transition cursor-pointer">
+                                <div class="font-display font-bold text-white text-sm">Growth Production</div>
+                                <div class="text-[11px] text-slate-300 mt-1">Custom UI/UX, scalable cloud</div>
+                            </button>
+                            <button type="button" onclick="updateEstimator('tier', 'enterprise')" data-val="enterprise" class="calc-tier-btn p-4 rounded-xl swiss-border bg-obsidian/80 text-left transition cursor-pointer">
+                                <div class="font-display font-bold text-white text-sm">Enterprise Custom</div>
+                                <div class="text-[11px] text-slate-400 mt-1">Multi-tenant, high concurrency</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step C: Functional Modules & Add-ons -->
+                    <div>
+                        <label class="block font-mono text-xs uppercase tracking-wider text-indigo-300 mb-3">
+                            STEP 03 // TOGGLE TECHNICAL MODULES
+                        </label>
+                        <div class="flex flex-wrap gap-2.5" id="calcAddonsGroup">
+                            <button type="button" onclick="toggleEstimatorAddon(this, 'payments', 1)" class="addon-chip active px-3.5 py-2 rounded-xl font-mono text-xs swiss-border bg-obsidian/70 cursor-pointer">
+                                💳 UPI / Stripe Payments (+1 wk)
+                            </button>
+                            <button type="button" onclick="toggleEstimatorAddon(this, 'gps', 1.5)" class="addon-chip active px-3.5 py-2 rounded-xl font-mono text-xs swiss-border bg-obsidian/70 cursor-pointer">
+                                📍 Live GPS &amp; Socket Tracking (+1.5 wks)
+                            </button>
+                            <button type="button" onclick="toggleEstimatorAddon(this, 'ai', 1.5)" class="addon-chip px-3.5 py-2 rounded-xl font-mono text-xs swiss-border bg-obsidian/70 text-slate-300 cursor-pointer">
+                                🤖 AI Copilot / Smart Search (+1.5 wks)
+                            </button>
+                            <button type="button" onclick="toggleEstimatorAddon(this, 'erp', 1)" class="addon-chip active px-3.5 py-2 rounded-xl font-mono text-xs swiss-border bg-obsidian/70 cursor-pointer">
+                                📊 Role-Based Admin &amp; GST ERP (+1 wk)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Live Blueprint Output Card (5 Cols) -->
+                <div class="lg:col-span-5 glow-card rounded-2xl p-6 sm:p-8 border border-indigoBrand/40 relative corner-plus">
+                    <div class="flex items-center justify-between pb-4 mb-5 border-b border-white/10">
+                        <span class="font-mono text-xs uppercase tracking-widest text-acidLime">● LIVE ARCHITECTURE SPEC</span>
+                        <span class="font-mono text-xs text-slate-400">SUFLEX-EST-2026</span>
+                    </div>
+
+                    <div class="space-y-5">
+                        <div class="p-4 rounded-xl bg-obsidian/90 swiss-border flex items-center justify-between">
+                            <div>
+                                <span class="font-mono text-[11px] uppercase text-slate-400 block">Estimated Delivery Sprint</span>
+                                <span id="estWeeksOutput" class="font-display font-extrabold text-3xl text-white">6 – 8 Weeks</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="font-mono text-[11px] uppercase text-slate-400 block">Dedicated Squad</span>
+                                <span id="estSquadOutput" class="font-mono font-bold text-sm text-acidLime">4 Senior Engineers</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <span class="font-mono text-[11px] uppercase text-slate-400 block mb-2">Recommended Technology Stack</span>
+                            <div id="estStackTags" class="flex flex-wrap gap-1.5">
+                                <!-- Dynamically populated -->
+                            </div>
+                        </div>
+
+                        <div>
+                            <span class="font-mono text-[11px] uppercase text-slate-400 block mb-2">Included Engineering Deliverables</span>
+                            <ul id="estDeliverablesList" class="space-y-2 text-xs sm:text-sm text-slate-200 font-mono">
+                                <!-- Dynamically populated -->
+                            </ul>
+                        </div>
+
+                        <button onclick="lockInEstimatorQuote()" class="w-full py-4 px-5 rounded-xl bg-gradient-to-r from-indigoBrand to-emeraldMint hover:opacity-95 text-white font-display font-extrabold text-sm shadow-lg shadow-indigoBrand/25 transition flex items-center justify-center gap-2 cursor-pointer">
+                            <span>Lock In Written Quote for This Spec →</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Deployed App & Web Portfolio Section -->
+    <section id="portfolio" class="py-20 sm:py-28 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                <div>
+                    <div class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-acidLime mb-3">
+                        <span>● SHIPPED PRODUCTION SYSTEMS</span>
+                    </div>
+                    <h2 class="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight">
+                        Apps &amp; Websites Engineered by SuflexMedia
+                    </h2>
+                </div>
+                <p class="text-slate-400 text-sm sm:text-base max-w-md">
+                    Inspect real mobile applications, headless web stores, and full-stack ecosystems engineered for high-growth brands.
+                </p>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-3 mb-10 no-scrollbar">
+                <button onclick="filterPortfolio('all', this)" class="portfolio-tab active shrink-0 px-4 py-2 rounded-xl font-mono text-xs sm:text-sm bg-acidLime text-obsidian font-bold transition cursor-pointer">
+                    All Systems (08)
+                </button>
+                <button onclick="filterPortfolio('mobile-app', this)" class="portfolio-tab shrink-0 px-4 py-2 rounded-xl font-mono text-xs sm:text-sm bg-slateCard swiss-border text-slate-300 hover:text-white transition cursor-pointer">
+                    📱 Mobile Applications (03)
+                </button>
+                <button onclick="filterPortfolio('web-platform', this)" class="portfolio-tab shrink-0 px-4 py-2 rounded-xl font-mono text-xs sm:text-sm bg-slateCard swiss-border text-slate-300 hover:text-white transition cursor-pointer">
+                    🌐 Websites &amp; SaaS Portals (02)
+                </button>
+                <button onclick="filterPortfolio('ecosystem', this)" class="portfolio-tab shrink-0 px-4 py-2 rounded-xl font-mono text-xs sm:text-sm bg-slateCard swiss-border text-slate-300 hover:text-white transition cursor-pointer">
+                    ⚡ Full App + Web Ecosystems (03)
+                </button>
+            </div>
+
+            <!-- 8 Rich Project Cards Grid -->
+            <div id="portfolioGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Populated dynamically via JS -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 7. 4-Step Sprint Engineering Process & Guarantees -->
+    <section id="process" class="py-20 sm:py-28 bg-slateCard/40 swiss-border-t swiss-border-b relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <div class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-acidLime mb-3">
+                    <span>● TRANSPARENT SPRINT EXECUTION</span>
+                </div>
+                <h2 class="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight">
+                    From Wireframe to App Store &amp; Web Live
+                </h2>
+                <p class="text-slate-400 text-sm sm:text-base mt-3">
+                    Every SuflexMedia build follows a battle-tested 4-stage engineering protocol with clickable weekly staging builds.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-14">
+                <div class="glow-card rounded-2xl p-6 sm:p-7">
+                    <div class="flex items-center justify-between mb-5">
+                        <span class="w-11 h-11 rounded-xl bg-indigoBrand/20 border border-indigoBrand/40 font-mono font-bold text-indigo-300 flex items-center justify-center">01</span>
+                        <span class="font-mono text-xs text-acidLime">DAYS 1–3</span>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-white mb-2">Architecture &amp; UI Blueprint</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        We map your user journeys, interactive Figma prototypes, database schema, and API endpoints before writing a line of code.
+                    </p>
+                </div>
+
+                <div class="glow-card rounded-2xl p-6 sm:p-7">
+                    <div class="flex items-center justify-between mb-5">
+                        <span class="w-11 h-11 rounded-xl bg-indigoBrand/20 border border-indigoBrand/40 font-mono font-bold text-indigo-300 flex items-center justify-center">02</span>
+                        <span class="font-mono text-xs text-acidLime">FIXED CONTRACT</span>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-white mb-2">Fixed-Scope Written Quote</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        You receive a locked-in cost and milestone delivery schedule in writing. Zero hourly billing surprises or scope creep.
+                    </p>
+                </div>
+
+                <div class="glow-card rounded-2xl p-6 sm:p-7">
+                    <div class="flex items-center justify-between mb-5">
+                        <span class="w-11 h-11 rounded-xl bg-indigoBrand/20 border border-indigoBrand/40 font-mono font-bold text-indigo-300 flex items-center justify-center">03</span>
+                        <span class="font-mono text-xs text-acidLime">WEEKLY DEMOS</span>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-white mb-2">Agile App &amp; Web Sprints</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Test live Android/iOS TestFlight builds on your phone and preview staging web URLs every week as features come online.
+                    </p>
+                </div>
+
+                <div class="glow-card rounded-2xl p-6 sm:p-7">
+                    <div class="flex items-center justify-between mb-5">
+                        <span class="w-11 h-11 rounded-xl bg-acidLime/20 border border-acidLime/40 font-mono font-bold text-acidLime flex items-center justify-center">04</span>
+                        <span class="font-mono text-xs text-acidLime">GO-LIVE &amp; SCALE</span>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-white mb-2">Store Launch &amp; Handover</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        We handle Play Store, App Store, and cloud web deployment, transfer 100% of the Git repositories to you, and train your team.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 4 SuflexMedia Guarantees -->
+            <div class="rounded-2xl bg-obsidian/90 swiss-border p-6 sm:p-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
+                    <div class="pt-4 sm:pt-0 sm:px-4 first:pt-0 first:pl-0">
+                        <div class="font-mono text-xs text-acidLime uppercase mb-1">● GUARANTEE 01</div>
+                        <h4 class="font-display font-bold text-lg text-white">100% IP &amp; Code Ownership</h4>
+                        <p class="text-slate-400 text-xs sm:text-sm mt-1">Full GitHub repo, domain, cloud &amp; store accounts in your name.</p>
+                    </div>
+                    <div class="pt-4 sm:pt-0 sm:px-6">
+                        <div class="font-mono text-xs text-acidLime uppercase mb-1">● GUARANTEE 02</div>
+                        <h4 class="font-display font-bold text-lg text-white">Sub-Second Web Speed</h4>
+                        <p class="text-slate-400 text-xs sm:text-sm mt-1">Engineered for 95–100 Google Lighthouse performance scores.</p>
+                    </div>
+                    <div class="pt-4 sm:pt-0 sm:px-6">
+                        <div class="font-mono text-xs text-acidLime uppercase mb-1">● GUARANTEE 03</div>
+                        <h4 class="font-display font-bold text-lg text-white">Store Approval Warranty</h4>
+                        <p class="text-slate-400 text-xs sm:text-sm mt-1">We handle all Apple App Store &amp; Google Play review compliance.</p>
+                    </div>
+                    <div class="pt-4 sm:pt-0 sm:px-6">
+                        <div class="font-mono text-xs text-acidLime uppercase mb-1">● GUARANTEE 04</div>
+                        <h4 class="font-display font-bold text-lg text-white">Post-Launch SLA Support</h4>
+                        <p class="text-slate-400 text-xs sm:text-sm mt-1">Dedicated warranty bug-fixes, server monitoring &amp; team training.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Interactive FAQ Accordion -->
+    <section id="faq" class="py-20 sm:py-28">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14">
+                <div class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-acidLime mb-3">
+                    <span>● TECHNICAL &amp; COMMERCIAL FAQ</span>
+                </div>
+                <h2 class="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight">
+                    App &amp; Website Questions, Answered
+                </h2>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ 0 -->
+                <div class="glow-card rounded-2xl overflow-hidden">
+                    <button onclick="toggleFaq(0)" class="w-full px-6 py-5 text-left flex items-center justify-between gap-4 cursor-pointer">
+                        <span class="font-display font-bold text-base sm:text-lg text-white">Should we build a Native App or Cross-Platform (Flutter / React Native)?</span>
+                        <span id="faqIcon-0" class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center font-mono text-acidLime">+</span>
+                    </button>
+                    <div id="faqContent-0" class="hidden px-6 pb-6 text-slate-300 text-sm sm:text-base leading-relaxed border-t border-white/5 pt-4">
+                        For 90% of businesses, modern cross-platform frameworks like <strong>Flutter</strong> or <strong>React Native</strong> deliver 60fps native performance on both iOS and Android from a single codebase — cutting your development cost and time by nearly 40%. When ultra-low-level hardware access is required, our team also builds pure Swift (iOS) and Kotlin (Android) applications.
+                    </div>
+                </div>
+
+                <!-- FAQ 1 -->
+                <div class="glow-card rounded-2xl overflow-hidden">
+                    <button onclick="toggleFaq(1)" class="w-full px-6 py-5 text-left flex items-center justify-between gap-4 cursor-pointer">
+                        <span class="font-display font-bold text-base sm:text-lg text-white">How do SuflexMedia websites differ from standard WordPress/Wix templates?</span>
+                        <span id="faqIcon-1" class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center font-mono text-acidLime">+</span>
+                    </button>
+                    <div id="faqContent-1" class="hidden px-6 pb-6 text-slate-300 text-sm sm:text-base leading-relaxed border-t border-white/5 pt-4">
+                        Bloated page-builder templates suffer from slow load speeds, plugin vulnerabilities, and poor mobile conversion. SuflexMedia engineers custom websites and web apps using <strong>Next.js, React, and Tailwind CSS</strong> with custom headless CMS/admin dashboards — achieving sub-second load times, 99+ Google SEO scores, and enterprise security.
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="glow-card rounded-2xl overflow-hidden">
+                    <button onclick="toggleFaq(2)" class="w-full px-6 py-5 text-left flex items-center justify-between gap-4 cursor-pointer">
+                        <span class="font-display font-bold text-base sm:text-lg text-white">Can my Mobile App and Website share the same database and admin panel?</span>
+                        <span id="faqIcon-2" class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center font-mono text-acidLime">+</span>
+                    </button>
+                    <div id="faqContent-2" class="hidden px-6 pb-6 text-slate-300 text-sm sm:text-base leading-relaxed border-t border-white/5 pt-4">
+                        Yes! That is our core specialty. We architect a unified cloud API backend so orders, users, inventory, and payments sync instantaneously across your iOS app, Android app, customer website, and master web admin cockpit.
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="glow-card rounded-2xl overflow-hidden">
+                    <button onclick="toggleFaq(3)" class="w-full px-6 py-5 text-left flex items-center justify-between gap-4 cursor-pointer">
+                        <span class="font-display font-bold text-base sm:text-lg text-white">How are payments structured and do I own the source code?</span>
+                        <span id="faqIcon-3" class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center font-mono text-acidLime">+</span>
+                    </button>
+                    <div id="faqContent-3" class="hidden px-6 pb-6 text-slate-300 text-sm sm:text-base leading-relaxed border-t border-white/5 pt-4">
+                        Projects are billed across clear, verifiable sprint milestones (e.g., UI Blueprint, Core Alpha Build, Beta Testing, and Final Store/Web Launch). Upon completion, you retain 100% intellectual property and source code ownership with zero recurring license lock-ins.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Footer -->
+    <footer class="bg-obsidian swiss-border-t pt-16 pb-12 text-slate-400">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-14 border-b border-white/10">
+                
+                <div class="lg:col-span-5 space-y-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigoBrand to-acidLime flex items-center justify-center text-obsidian font-display font-extrabold">
+                            S
+                        </div>
+                        <span class="font-display font-extrabold text-xl text-white">Suflex<span class="text-acidLime">Media</span></span>
+                    </div>
+                    <p class="text-sm text-slate-300 max-w-sm leading-relaxed">
+                        Premier Application Development &amp; Website Engineering Studio. Building high-velocity iOS, Android, Next.js, and SaaS ecosystems with upfront fixed pricing.
+                    </p>
+                    <div class="inline-flex items-center gap-3 p-3.5 rounded-xl bg-slateCard swiss-border">
+                        <div class="text-acidLime text-lg tracking-tight">★★★★★</div>
+                        <div class="text-xs font-mono">
+                            <span class="text-white font-bold">4.9 / 5.0 Engineering Rating</span>
+                            <span class="block text-slate-400">120+ Verified App &amp; Web Deployments</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-3 space-y-3">
+                    <h4 class="font-mono text-xs uppercase tracking-widest text-white font-semibold">Application Facility</h4>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="#facilities" class="hover:text-acidLime transition">iOS &amp; Swift Engineering</a></li>
+                        <li><a href="#facilities" class="hover:text-acidLime transition">Android &amp; Kotlin Apps</a></li>
+                        <li><a href="#facilities" class="hover:text-acidLime transition">Flutter &amp; React Native</a></li>
+                        <li><a href="#facilities" class="hover:text-acidLime transition">On-Demand GPS &amp; Socket Apps</a></li>
+                        <li><a href="#estimator" class="hover:text-acidLime transition">App Cost Calculator</a></li>
+                    </ul>
+                </div>
+
+                <div class="lg:col-span-4 space-y-3">
+                    <h4 class="font-mono text-xs uppercase tracking-widest text-white font-semibold">Website &amp; Web App Facility</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li>• Next.js &amp; React Web Applications</li>
+                        <li>• High-Converting Custom Brand Websites</li>
+                        <li>• Headless E-Commerce &amp; UPI Checkouts</li>
+                        <li>• Custom SaaS Portals &amp; Cloud ERP</li>
+                    </ul>
+                    <div class="pt-3 space-y-1 text-sm font-mono text-slate-200">
+                        <div>📞 <a href="tel:+917416025999" class="text-acidLime hover:underline">+91 74160 25999</a></div>
+                        <div>✉️ <span class="text-indigo-300">builds@suflexmedia.in</span></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
+                <div>© 2026 SuflexMedia Engineering Studio. All rights reserved.</div>
+                <div class="flex items-center gap-6">
+                    <button onclick="openQuoteModal('Footer Architecture Call')" class="text-acidLime hover:underline cursor-pointer">Schedule 30-Min Architecture Call →</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===================================================================== -->
+    <!-- MODAL 1: Interactive Quote & Architecture Consultation Modal          -->
+    <!-- ===================================================================== -->
+    <div id="quoteModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-obsidian/85 backdrop-blur-md">
+        <div class="glow-card rounded-2xl max-w-lg w-full p-6 sm:p-8 relative border border-indigoBrand/50 shadow-2xl">
+            <button onclick="closeQuoteModal()" class="absolute top-5 right-5 w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center font-mono cursor-pointer">
+                ✕
+            </button>
+
+            <div id="modalFormContainer">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigoBrand/20 border border-indigoBrand/40 text-acidLime font-mono text-xs mb-3">
+                    <span>● SUFLEXMEDIA ARCHITECTURE DESK</span>
+                </div>
+                <h3 class="font-display font-extrabold text-2xl text-white">Start Your App or Web Build</h3>
+                <p class="text-xs sm:text-sm text-slate-400 mt-1 mb-6" id="modalContextSubtitle">
+                    Fixed written quote · Architecture roadmap · 100% IP ownership
+                </p>
+
+                <form id="popupQuoteForm" onsubmit="handleModalQuoteSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block font-mono text-xs uppercase text-slate-400 mb-2">Select Facility Scope</label>
+                        <div class="flex flex-wrap gap-2" id="modalNeedPills">
+                            <button type="button" onclick="toggleNeedPill(this)" data-value="Mobile App (iOS/Android)" class="config-pill active px-3 py-1.5 rounded-lg text-xs font-medium swiss-border bg-obsidian text-slate-300 cursor-pointer">📱 Mobile App</button>
+                            <button type="button" onclick="toggleNeedPill(this)" data-value="Custom Website / Web App" class="config-pill active px-3 py-1.5 rounded-lg text-xs font-medium swiss-border bg-obsidian text-slate-300 cursor-pointer">🌐 Website / Web App</button>
+                            <button type="button" onclick="toggleNeedPill(this)" data-value="App + Web Ecosystem" class="config-pill px-3 py-1.5 rounded-lg text-xs font-medium swiss-border bg-obsidian text-slate-300 cursor-pointer">⚡ App + Web Ecosystem</button>
+                            <button type="button" onclick="toggleNeedPill(this)" data-value="E-Commerce / SaaS" class="config-pill px-3 py-1.5 rounded-lg text-xs font-medium swiss-border bg-obsidian text-slate-300 cursor-pointer">🛍️ E-Commerce / SaaS</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="modalName" class="block font-mono text-xs uppercase text-slate-400 mb-1">Your Name *</label>
+                            <input id="modalName" type="text" required placeholder="Vikramaditya Rao" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian swiss-border text-white text-sm focus:outline-none focus:border-indigoBrand">
+                        </div>
+                        <div>
+                            <label for="modalPhone" class="block font-mono text-xs uppercase text-slate-400 mb-1">Phone / WhatsApp *</label>
+                            <input id="modalPhone" type="tel" required placeholder="+91 98765 43210" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian swiss-border text-white text-sm font-mono focus:outline-none focus:border-indigoBrand">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="modalNotes" class="block font-mono text-xs uppercase text-slate-400 mb-1">Project Brief / Target Launch Window</label>
+                        <textarea id="modalNotes" rows="2" placeholder="Describe your mobile app or website goals..." class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian swiss-border text-white text-sm focus:outline-none focus:border-indigoBrand"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 rounded-xl bg-acidLime hover:bg-lime-300 text-obsidian font-display font-extrabold text-sm shadow-lg shadow-acidLime/20 transition cursor-pointer">
+                        Verify &amp; Request Written Quote →
+                    </button>
+                </form>
+            </div>
+
+            <div id="modalSuccessContainer" class="hidden py-8 text-center space-y-4">
+                <div class="w-14 h-14 rounded-2xl bg-acidLime/20 border border-acidLime/40 text-acidLime mx-auto flex items-center justify-center text-2xl">
+                    ✓
+                </div>
+                <h4 class="font-display font-bold text-2xl text-white">SuflexMedia Brief Confirmed!</h4>
+                <p class="text-sm text-slate-300 max-w-sm mx-auto" id="modalSuccessText">
+                    Our engineering lead has received your specification and will contact you shortly.
+                </p>
+                <button onclick="closeQuoteModal()" class="px-6 py-2.5 rounded-xl bg-acidLime text-obsidian font-display font-bold text-xs cursor-pointer">
+                    Done
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- MODAL 2: Human Verification Security Challenge                        -->
+    <!-- ===================================================================== -->
+    <div id="captchaModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-obsidian/90 backdrop-blur-md">
+        <div class="glow-card rounded-2xl max-w-sm w-full p-6 sm:p-7 text-center border border-acidLime/50 shadow-2xl">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-indigoBrand/20 text-indigo-300 font-mono text-xs mb-3">
+                <span>🛡️ SUFLEXMEDIA HUMAN CHECK</span>
+            </div>
+            <h3 class="font-display font-bold text-xl text-white">Verify Your Dispatch</h3>
+            <p class="text-xs text-slate-400 mt-1 mb-5">
+                Tap the matching security token below to dispatch your brief:
+            </p>
+
+            <div class="py-4 px-6 rounded-xl bg-obsidian swiss-border mb-5">
+                <span class="block font-mono text-[11px] uppercase text-slate-400">Target Security Code</span>
+                <span id="captchaTargetNum" class="font-mono font-extrabold text-4xl text-acidLime tracking-widest">84</span>
+            </div>
+
+            <div id="captchaOptionsGrid" class="grid grid-cols-4 gap-2.5 mb-4"></div>
+
+            <p id="captchaErrorMsg" class="hidden text-xs font-mono text-rose-400 mb-3">
+                ✕ Mismatch detected. Generating new token...
+            </p>
+
+            <button onclick="closeCaptchaModal()" class="text-xs font-mono text-slate-500 hover:text-slate-300 cursor-pointer">
+                Cancel verification
+            </button>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- MODAL 3: Case Study Architecture Inspection Modal                     -->
+    <!-- ===================================================================== -->
+    <div id="caseStudyModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-obsidian/85 backdrop-blur-md">
+        <div class="glow-card rounded-2xl max-w-2xl w-full p-6 sm:p-8 relative border border-indigoBrand/50 max-h-[90vh] overflow-y-auto">
+            <button onclick="closeCaseStudyModal()" class="absolute top-5 right-5 w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center font-mono cursor-pointer">
+                ✕
+            </button>
+            <div id="caseStudyBody"></div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- APPLICATION LOGIC & INTERACTIVE CONTROLLERS                           -->
+    <!-- ===================================================================== -->
+    <script>
+        // -----------------------------------------------------------------
+        // 1. Blueprint Grid Theme Toggle
+        // -----------------------------------------------------------------
+        let isBlueprintMode = false;
+        function toggleBlueprintMode() {
+            isBlueprintMode = !isBlueprintMode;
+            document.body.classList.toggle('blueprint-mode', isBlueprintMode);
+            document.getElementById('blueprintToggleLabel').textContent = isBlueprintMode
+                ? 'Blueprint Grid: ON'
+                : 'Blueprint Grid: OFF';
+        }
+
+        // -----------------------------------------------------------------
+        // 2. Facility 01 & 02 Interactive Device Viewport Simulators
+        // -----------------------------------------------------------------
+        const appViewportData = {
+            fintech: {
+                tag: 'IOS & ANDROID // FLUTTER ENGINE',
+                title: 'FinPulse Instant UPI & Wealth App',
+                metric: '60fps Biometric Checkout · <180ms API Latency',
+                highlights: ['FaceID / Passkey Vault', 'Live Mutual Fund NAV Socket', '1-Tap UPI Intent Flow']
+            },
+            ondemand: {
+                tag: 'NATIVE & CROSS-PLATFORM // LIVE TELEMETRY',
+                title: 'GoTaxi & Hyperlocal Rider Dispatch App',
+                metric: 'Sub-Second WebSocket GPS · Background Geo-Tracking',
+                highlights: ['Live Rider Polyline Map', 'Dynamic Surge Fare Engine', 'Instant Push + Voice Alerts']
+            },
+            telehealth: {
+                tag: 'HIPAA-READY MOBILE // WEBRTC VIDEO',
+                title: 'MediCare+ HD Doctor Consultation App',
+                metric: 'Encrypted Video Calling · Digital Rx PDF Generator',
+                highlights: ['Slot Booking Calendar', 'In-App Pharmacy Cart', 'Family Health Vault']
+            }
+        };
+
+        const webViewportData = {
+            saas: {
+                url: 'https://app.buildflow-cloud.io/analytics',
+                title: 'BuildFlow Multi-Tenant SaaS & ERP Portal',
+                metric: 'Next.js 15 App Router · 99 Lighthouse Performance',
+                highlights: ['Real-Time Revenue Charts', 'Role-Based Staff Permissions', 'Automated GST Invoice PDF']
+            },
+            ecommerce: {
+                url: 'https://store.nexacommerce.in/checkout',
+                title: 'NexaCommerce Headless D2C Web Storefront',
+                metric: '0.6s LCP Page Load · +42% Checkout Conversion',
+                highlights: ['Instant Algolia Product Search', 'Razorpay / Stripe 1-Click', 'Live Courier Webhook Sync']
+            },
+            corporate: {
+                url: 'https://www.apexventures.global',
+                title: 'Apex Interactive 3D & Motion Brand Website',
+                metric: '100/100 Technical SEO · Schema.org Rich Snippets',
+                highlights: ['Interactive Product Explainers', 'CRM Lead Routing Engine', 'Global Edge CDN Caching']
+            }
+        };
+
+        function switchAppPreview(key, btnEl) {
+            if (btnEl) {
+                document.querySelectorAll('.app-preview-btn').forEach(b => {
+                    b.className = 'app-preview-btn px-2.5 py-1 rounded-md font-mono text-[11px] bg-white/5 text-slate-300 hover:text-white cursor-pointer';
+                });
+                btnEl.className = 'app-preview-btn px-2.5 py-1 rounded-md font-mono text-[11px] bg-indigoBrand text-white font-semibold cursor-pointer';
+            }
+            const item = appViewportData[key];
+            document.getElementById('appViewportScreen').innerHTML = `
+                <div class="flex items-center justify-between text-[11px] font-mono text-indigo-300 mb-2">
+                    <span>● ${item.tag}</span>
+                    <span class="text-acidLime">99.98% CRASH-FREE</span>
+                </div>
+                <div class="font-display font-bold text-lg text-white">${item.title}</div>
+                <div class="font-mono text-xs text-slate-300 mt-1 mb-3">${item.metric}</div>
+                <div class="flex flex-wrap gap-1.5">
+                    ${item.highlights.map(h => `<span class="px-2.5 py-1 rounded-md bg-obsidian/80 swiss-border font-mono text-[11px] text-acidLime">✓ ${h}</span>`).join('')}
+                </div>
+            `;
+        }
+
+        function switchWebPreview(key, btnEl) {
+            if (btnEl) {
+                document.querySelectorAll('.web-preview-btn').forEach(b => {
+                    b.className = 'web-preview-btn px-2.5 py-1 rounded-md font-mono text-[11px] bg-white/5 text-slate-300 hover:text-white cursor-pointer';
+                });
+                btnEl.className = 'web-preview-btn px-2.5 py-1 rounded-md font-mono text-[11px] bg-acidLime text-obsidian font-bold cursor-pointer';
+            }
+            const item = webViewportData[key];
+            document.getElementById('webViewportScreen').innerHTML = `
+                <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-2 bg-obsidian/70 px-2.5 py-1 rounded border border-white/5">
+                    <span class="truncate text-acidLime">🔒 ${item.url}</span>
+                    <span class="text-emerald-400 shrink-0 ml-2">CWV: 99/100</span>
+                </div>
+                <div class="font-display font-bold text-lg text-white">${item.title}</div>
+                <div class="font-mono text-xs text-slate-300 mt-1 mb-3">${item.metric}</div>
+                <div class="flex flex-wrap gap-1.5">
+                    ${item.highlights.map(h => `<span class="px-2.5 py-1 rounded-md bg-obsidian/80 swiss-border font-mono text-[11px] text-indigo-300">✦ ${h}</span>`).join('')}
+                </div>
+            `;
+        }
+
+        // -----------------------------------------------------------------
+        // 3. Interactive App & Web Scope Estimator Logic
+        // -----------------------------------------------------------------
+        let estimatorState = {
+            facility: 'both', // 'web', 'app', 'both'
+            tier: 'growth',   // 'mvp', 'growth', 'enterprise'
+            addons: {
+                payments: 1,
+                gps: 1.5,
+                erp: 1
+            }
+        };
+
+        function updateEstimator(type, value) {
+            estimatorState[type] = value;
+            if (type === 'facility') {
+                document.querySelectorAll('.calc-facility-btn').forEach(btn => {
+                    const isMatch = btn.getAttribute('data-val') === value;
+                    btn.classList.toggle('active', isMatch);
+                    btn.classList.toggle('config-pill', isMatch);
+                });
+            } else if (type === 'tier') {
+                document.querySelectorAll('.calc-tier-btn').forEach(btn => {
+                    const isMatch = btn.getAttribute('data-val') === value;
+                    btn.classList.toggle('active', isMatch);
+                    btn.classList.toggle('config-pill', isMatch);
+                });
+            }
+            renderEstimatorOutput();
+        }
+
+        function toggleEstimatorAddon(btnEl, key, weeksWeight) {
+            btnEl.classList.toggle('active');
+            if (estimatorState.addons[key]) {
+                delete estimatorState.addons[key];
+            } else {
+                estimatorState.addons[key] = weeksWeight;
+            }
+            renderEstimatorOutput();
+        }
+
+        function renderEstimatorOutput() {
+            const baseWeeksMap = { web: 2.5, app: 4, both: 5.5 };
+            const tierMultiplier = { mvp: 0.8, growth: 1.0, enterprise: 1.45 };
+
+            let addonWeeks = Object.values(estimatorState.addons).reduce((acc, v) => acc + v, 0);
+            let rawWeeks = (baseWeeksMap[estimatorState.facility] * tierMultiplier[estimatorState.tier]) + addonWeeks;
+            let minW = Math.max(2, Math.floor(rawWeeks));
+            let maxW = minW + 2;
+
+            document.getElementById('estWeeksOutput').textContent = `${minW} – ${maxW} Weeks`;
+
+            const squadMap = {
+                web: '2 Web Architects + 1 UI/UX',
+                app: '2 Mobile Engineers + 1 Backend',
+                both: '4 Senior App & Web Engineers'
+            };
+            document.getElementById('estSquadOutput').textContent = squadMap[estimatorState.facility];
+
+            // Recommended Stack Tags
+            let stack = [];
+            if (estimatorState.facility === 'web' || estimatorState.facility === 'both') {
+                stack.push('Next.js 15', 'React 19', 'Tailwind CSS', 'Vercel Edge');
+            }
+            if (estimatorState.facility === 'app' || estimatorState.facility === 'both') {
+                stack.push('Flutter / React Native', 'iOS Swift', 'Android Kotlin');
+            }
+            stack.push('Node.js / PostgreSQL', 'REST & WebSockets');
+            if (estimatorState.addons.payments) stack.push('Razorpay UPI / Stripe');
+            if (estimatorState.addons.gps) stack.push('Google Maps Live Telemetry');
+            if (estimatorState.addons.ai) stack.push('OpenAI / Vector Search');
+
+            document.getElementById('estStackTags').innerHTML = stack.map(s => `
+                <span class="px-2.5 py-1 rounded-md bg-obsidian swiss-border font-mono text-xs text-indigo-300">${s}</span>
+            `).join('');
+
+            // Deliverables
+            let deliverables = [
+                '✓ Interactive Figma UI/UX Design System',
+                '✓ Automated QA Testing & Staging Links',
+                '✓ 100% Source Code & Git Repository Handover'
+            ];
+            if (estimatorState.facility === 'web') {
+                deliverables.unshift('✓ Custom Next.js Website + SEO Schema Architecture');
+            } else if (estimatorState.facility === 'app') {
+                deliverables.unshift('✓ Production iOS (.ipa) & Android (.aab) Store Submission');
+            } else {
+                deliverables.unshift('✓ iOS & Android Apps + High-Speed Web Platform + Unified Cloud API');
+            }
+
+            document.getElementById('estDeliverablesList').innerHTML = deliverables.map(d => `<li>${d}</li>`).join('');
+        }
+
+        function lockInEstimatorQuote() {
+            const facLabel = estimatorState.facility === 'both'
+                ? 'Unified Mobile App + Web Ecosystem'
+                : (estimatorState.facility === 'app' ? 'Mobile Application Build' : 'Custom Website / Web App');
+            const weeksText = document.getElementById('estWeeksOutput').textContent;
+            openQuoteModal(`${facLabel} (${estimatorState.tier.toUpperCase()} Tier · Est. ${weeksText})`);
+        }
+
+        // -----------------------------------------------------------------
+        // 4. Deployed App & Web Portfolio Showcase (8 Projects)
+        // -----------------------------------------------------------------
+        const deployedProjects = [
+            {
+                id: 'native-kitchen',
+                number: '01',
+                title: 'Native Kitchen Food Delivery App & Web Console',
+                badge: 'App + Web Ecosystem',
+                filterGroup: 'ecosystem',
+                platforms: ['iOS App', 'Android App', 'Next.js Web', 'Dispatcher'],
+                accent: 'from-indigo-500/30 via-emerald-500/10 to-transparent',
+                icon: '🍲',
+                summary: 'Full-stack regional food ordering mobile app (iOS/Android) paired with a high-converting web ordering storefront and live kitchen KOT dispatch panel.',
+                features: ['Customer & Rider Mobile Apps', 'Next.js Web Ordering Store', 'Live Socket Order Tracking'],
+                metrics: 'Sub-2s UPI Checkout · 99.9% Crash-Free Mobile · Live Rider Map',
+                stack: 'Flutter (iOS/Android) · Next.js 15 Web · Node.js · Google Maps Socket · Razorpay'
+            },
+            {
+                id: 'nexacommerce',
+                number: '02',
+                title: 'NexaCommerce Headless D2C Website & PWA',
+                badge: 'Website & E-Commerce',
+                filterGroup: 'web-platform',
+                platforms: ['Next.js 15', 'Headless Store', 'PWA', 'ERP Sync'],
+                accent: 'from-lime-500/30 via-indigo-500/10 to-transparent',
+                icon: '🛍️',
+                summary: 'Ultra-fast custom headless e-commerce website engineered for sub-second page loads, instant filtering, automated GST invoicing, and zero-commission UPI checkouts.',
+                features: ['0.6s LCP Web Architecture', '1-Click UPI & Card Checkout', 'Automated Inventory & Courier Sync'],
+                metrics: '99/100 Google Lighthouse · +46% Mobile Web Conversion',
+                stack: 'Next.js App Router · Tailwind CSS · PostgreSQL · Shiprocket & Razorpay API'
+            },
+            {
+                id: 'finpulse-app',
+                number: '03',
+                title: 'FinPulse Wealth, UPI & Expense Mobile App',
+                badge: 'Mobile Application',
+                filterGroup: 'mobile-app',
+                platforms: ['iOS Swift', 'Android Kotlin', 'Biometric Auth'],
+                accent: 'from-indigo-500/30 via-cyan-500/10 to-transparent',
+                icon: '💳',
+                summary: 'Consumer fintech mobile application featuring biometric passkey login, real-time portfolio telemetry, automated expense categorization, and instant UPI transfers.',
+                features: ['FaceID / Biometric Security', 'Real-Time Portfolio Charts', 'Offline-First Ledger Sync'],
+                metrics: '60fps Native Animations · AES-256 Encrypted Local Vault',
+                stack: 'Flutter · Native Biometric Channels · Go Microservices · WebSockets'
+            },
+            {
+                id: 'gotaxi-mobility',
+                number: '04',
+                title: 'GoTaxi Ride-Hailing Apps & Fleet Web Grid',
+                badge: 'App + Web Ecosystem',
+                filterGroup: 'ecosystem',
+                platforms: ['Passenger App', 'Driver App', 'Web Command Center'],
+                accent: 'from-amber-500/30 via-indigo-500/10 to-transparent',
+                icon: '🚕',
+                summary: 'High-concurrency cab, auto, and bike-taxi booking mobile apps integrated with a real-time city fleet monitoring web console and dynamic surge pricing engine.',
+                features: ['Passenger & Driver Mobile Apps', 'Live City Heatmap Web Console', 'Automated Driver Wallet Split'],
+                metrics: 'Nearest-Driver Geo-Query <120ms · SOS Trip Telemetry',
+                stack: 'Flutter · React Web Admin · Redis Geo-Index · Google Directions API'
+            },
+            {
+                id: 'buildflow-saas',
+                number: '05',
+                title: 'BuildFlow Cloud ERP & Multi-Branch Web Portal',
+                badge: 'Web SaaS Platform',
+                filterGroup: 'web-platform',
+                platforms: ['React Web App', 'Cloud ERP', 'Analytics BI'],
+                accent: 'from-emerald-500/30 via-teal-500/10 to-transparent',
+                icon: '📊',
+                summary: 'Enterprise browser-based ERP and workflow automation web application replacing fragmented spreadsheets with live GST billing, warehouse stock alerts, and role permissions.',
+                features: ['Multi-Branch Inventory Matrix', 'Automated GST Billing & Ledgers', 'Live Executive Analytics Dashboard'],
+                metrics: 'Handles 500k+ SKU Rows Smoothly · Role-Based Access Control',
+                stack: 'Next.js · TypeScript · PostgreSQL · Prisma · AWS Automated Backups'
+            },
+            {
+                id: 'medicare-telehealth',
+                number: '06',
+                title: 'MediCare+ Telemedicine App & Clinic Web Portal',
+                badge: 'App + Web Ecosystem',
+                filterGroup: 'ecosystem',
+                platforms: ['iOS & Android App', 'Doctor Web Portal', 'WebRTC'],
+                accent: 'from-cyan-500/30 via-indigo-500/10 to-transparent',
+                icon: '🩺',
+                summary: 'Patient mobile application for booking specialist consultations and ordering medicines, paired with a dedicated web portal for doctors to conduct HD video calls and issue digital prescriptions.',
+                features: ['HD Video Telehealth Calling', 'Doctor Web Prescription Cockpit', 'Pharmacy Order & Lab Tracking'],
+                metrics: 'Encrypted Health Records · Automated WhatsApp & Push Reminders',
+                stack: 'React Native · Next.js Doctor Portal · WebRTC · Cloud Storage'
+            },
+            {
+                id: 'sterline-field-app',
+                number: '07',
+                title: 'Sterline Workforce Live GPS & Attendance App',
+                badge: 'Mobile Application',
+                filterGroup: 'mobile-app',
+                platforms: ['Android Foreground GPS', 'iOS App', 'Offline Sync'],
+                accent: 'from-purple-500/30 via-indigo-500/10 to-transparent',
+                icon: '📍',
+                summary: 'Battery-optimized field sales and workforce tracking mobile application with geofenced selfie attendance, route playback, and automated kilometer expense calculation.',
+                features: ['Battery-Safe Background GPS', 'Geofenced Selfie Attendance', 'Offline Route Queue & Sync'],
+                metrics: '<4% Daily Battery Impact · Accurate Polyline Distance Audit',
+                stack: 'Kotlin & Swift Native Location SDK · Flutter UI · Mapbox Telemetry'
+            },
+            {
+                id: 'learnsphere-lms',
+                number: '08',
+                title: 'LearnSphere EdTech Mobile App & Web Academy',
+                badge: 'Mobile Application',
+                filterGroup: 'mobile-app',
+                platforms: ['iOS & Android', 'DRM Video', 'Offline Downloads'],
+                accent: 'from-rose-500/30 via-indigo-500/10 to-transparent',
+                icon: '🎓',
+                summary: 'Interactive e-learning mobile app and responsive web academy featuring encrypted offline video downloads, live cohort classrooms, and automated quiz certification.',
+                features: ['Offline Encrypted Video Playback', 'Live Interactive Doubt Rooms', 'Instant Verifiable Certificates'],
+                metrics: 'Adaptive HLS Streaming · 99.95% Uptime During Live Exams',
+                stack: 'Flutter · Next.js Web · Mux/Cloudflare Video CDN · PostgreSQL'
+            }
+        ];
+
+        function renderPortfolio(filterCategory = 'all') {
+            const grid = document.getElementById('portfolioGrid');
+            const filtered = filterCategory === 'all'
+                ? deployedProjects
+                : deployedProjects.filter(p => p.filterGroup === filterCategory);
+
+            grid.innerHTML = filtered.map(proj => `
+                <article class="glow-card rounded-2xl overflow-hidden flex flex-col justify-between group">
+                    <div>
+                        <div class="h-44 bg-gradient-to-br ${proj.accent} p-5 relative flex flex-col justify-between border-b border-white/10">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-md bg-obsidian/85 swiss-border font-mono text-[11px] text-acidLime font-semibold">
+                                    ${proj.badge}
+                                </span>
+                                <span class="font-mono text-xs text-slate-400">BUILD #${proj.number}</span>
+                            </div>
+
+                            <!-- Platform Chips Row -->
+                            <div class="flex flex-wrap gap-1.5 my-auto">
+                                ${proj.platforms.map(pl => `
+                                    <span class="px-2 py-0.5 rounded bg-obsidian/90 border border-white/10 font-mono text-[10px] text-indigo-300">
+                                        ${pl}
+                                    </span>
+                                `).join('')}
+                            </div>
+
+                            <div class="flex items-center gap-3 bg-obsidian/90 swiss-border rounded-xl p-2.5">
+                                <div class="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-xl shrink-0">
+                                    ${proj.icon}
+                                </div>
+                                <p class="font-mono text-[11px] text-slate-300 truncate">${proj.metrics}</p>
+                            </div>
+                        </div>
+
+                        <div class="p-6">
+                            <h3 class="font-display font-bold text-xl text-white group-hover:text-acidLime transition mb-2">
+                                ${proj.title}
+                            </h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-5">
+                                ${proj.summary}
+                            </p>
+                            <div class="space-y-1.5 mb-4">
+                                ${proj.features.map(f => `
+                                    <div class="flex items-center gap-2 text-xs font-mono text-slate-200">
+                                        <span class="text-acidLime">✦</span>
+                                        <span>${f}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="px-6 pb-6 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+                        <button onclick="openCaseStudy('${proj.id}')" class="px-3.5 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-xs font-mono text-slate-200 hover:text-acidLime transition cursor-pointer">
+                            Inspect Architecture ↗
+                        </button>
+                        <button onclick="openQuoteModal('Build Similar: ${proj.title}')" class="px-3.5 py-2 rounded-lg bg-indigoBrand/20 hover:bg-acidLime text-indigo-300 hover:text-obsidian font-mono text-xs font-bold transition cursor-pointer">
+                            Build Similar →
+                        </button>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        function filterPortfolio(category, btnEl) {
+            document.querySelectorAll('.portfolio-tab').forEach(btn => {
+                btn.className = 'portfolio-tab shrink-0 px-4 py-2 rounded-xl font-mono text-xs sm:text-sm bg-slateCard swiss-border text-slate-300 hover:text-white transition cursor-pointer';
+            });
+            btnEl.className = 'portfolio-tab active shrink-0 px-4 py-2 rounded-xl font-mono text-xs sm:text-sm bg-acidLime text-obsidian font-bold transition cursor-pointer';
+            renderPortfolio(category);
+        }
+
+        function openCaseStudy(projectId) {
+            const proj = deployedProjects.find(p => p.id === projectId);
+            if (!proj) return;
+
+            document.getElementById('caseStudyBody').innerHTML = `
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3">
+                        <span class="text-3xl">${proj.icon}</span>
+                        <div>
+                            <span class="font-mono text-xs uppercase text-acidLime">${proj.badge} · SUFLEXMEDIA CASE #${proj.number}</span>
+                            <h3 class="font-display font-extrabold text-2xl text-white">${proj.title}</h3>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">${proj.summary}</p>
+                    <div class="flex flex-wrap gap-2">
+                        ${proj.platforms.map(pl => `<span class="px-3 py-1 rounded-lg bg-indigoBrand/20 border border-indigoBrand/40 font-mono text-xs text-indigo-300">${pl}</span>`).join('')}
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        ${proj.features.map(f => `
+                            <div class="p-3.5 rounded-xl bg-obsidian swiss-border">
+                                <span class="text-acidLime font-mono text-[10px] block mb-1">SHIPPED MODULE</span>
+                                <span class="font-display font-bold text-sm text-white">${f}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="p-4 rounded-xl bg-obsidian/90 swiss-border space-y-2 font-mono text-xs">
+                        <div class="flex justify-between gap-2">
+                            <span class="text-slate-400">TELEMETRY BENCHMARK:</span>
+                            <span class="text-acidLime text-right">${proj.metrics}</span>
+                        </div>
+                        <div class="flex justify-between gap-2">
+                            <span class="text-slate-400">PRODUCTION STACK:</span>
+                            <span class="text-slate-200 text-right">${proj.stack}</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-center justify-end gap-3 pt-2">
+                        <button onclick="closeCaseStudyModal()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white/5 text-slate-300 text-xs font-mono cursor-pointer">
+                            Close Spec
+                        </button>
+                        <button onclick="closeCaseStudyModal(); openQuoteModal('Architecture Quote for: ${proj.title}')" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-acidLime hover:bg-lime-300 text-obsidian font-display font-extrabold text-sm cursor-pointer">
+                            Request Quote for Similar System →
+                        </button>
+                    </div>
+                </div>
+            `;
+            const modal = document.getElementById('caseStudyModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeCaseStudyModal() {
+            const modal = document.getElementById('caseStudyModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // -----------------------------------------------------------------
+        // 5. Form Pills, Platform Chips & Human Verification Challenge
+        // -----------------------------------------------------------------
+        function toggleNeedPill(btn) {
+            btn.classList.toggle('active');
+        }
+
+        function togglePlatformChip(btn) {
+            btn.classList.toggle('active');
+        }
+
+        function getSelectedNeeds(containerId) {
+            const activeBtns = document.querySelectorAll(`#${containerId} .config-pill.active`);
+            const values = Array.from(activeBtns).map(b => b.getAttribute('data-value'));
+            return values.length > 0 ? values.join(' + ') : 'App & Web Consultation';
+        }
+
+        function getSelectedPlatforms() {
+            const activeChips = document.querySelectorAll('#heroPlatformChips .platform-chip.active');
+            const values = Array.from(activeChips).map(c => c.getAttribute('data-platform'));
+            return values.length > 0 ? values.join(', ') : 'Custom Stack';
+        }
+
+        let pendingSubmissionSource = null;
+        let currentCaptchaAnswer = null;
+
+        function handleHeroQuoteSubmit(e) {
+            e.preventDefault();
+            pendingSubmissionSource = 'hero';
+            triggerCaptchaChallenge();
+        }
+
+        function handleModalQuoteSubmit(e) {
+            e.preventDefault();
+            pendingSubmissionSource = 'modal';
+            triggerCaptchaChallenge();
+        }
+
+        function triggerCaptchaChallenge() {
+            const target = Math.floor(10 + Math.random() * 89);
+            currentCaptchaAnswer = target;
+            document.getElementById('captchaTargetNum').textContent = target;
+            document.getElementById('captchaErrorMsg').classList.add('hidden');
+
+            const options = new Set([target]);
+            while (options.size < 4) {
+                options.add(Math.floor(10 + Math.random() * 89));
+            }
+            const shuffled = Array.from(options).sort(() => Math.random() - 0.5);
+
+            document.getElementById('captchaOptionsGrid').innerHTML = shuffled.map(num => `
+                <button type="button" onclick="verifyCaptchaChoice(${num})" class="py-3.5 rounded-xl bg-slateElevated hover:bg-acidLime hover:text-obsidian swiss-border font-mono font-bold text-lg text-white transition cursor-pointer">
+                    ${num}
+                </button>
+            `).join('');
+
+            const modal = document.getElementById('captchaModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function verifyCaptchaChoice(chosenNumber) {
+            if (chosenNumber === currentCaptchaAnswer) {
+                closeCaptchaModal();
+                completeVerifiedSubmission();
+            } else {
+                document.getElementById('captchaErrorMsg').classList.remove('hidden');
+                setTimeout(triggerCaptchaChallenge, 600);
+            }
+        }
+
+        function closeCaptchaModal() {
+            const modal = document.getElementById('captchaModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function completeVerifiedSubmission() {
+            if (pendingSubmissionSource === 'hero') {
+                const name = document.getElementById('heroName').value;
+                const phone = document.getElementById('heroPhone').value;
+                const needs = getSelectedNeeds('heroNeedPills');
+                const platforms = getSelectedPlatforms();
+
+                document.getElementById('heroQuoteForm').classList.add('hidden');
+                document.getElementById('heroSuccessSummary').textContent =
+                    `Thanks ${name}! SuflexMedia has logged your [${needs}] brief (${platforms}). We will reach out at ${phone} within 15 minutes with your fixed quote.`;
+                document.getElementById('heroSuccessState').classList.remove('hidden');
+            } else if (pendingSubmissionSource === 'modal') {
+                const name = document.getElementById('modalName').value;
+                const phone = document.getElementById('modalPhone').value;
+                const needs = getSelectedNeeds('modalNeedPills');
+
+                document.getElementById('modalFormContainer').classList.add('hidden');
+                document.getElementById('modalSuccessText').textContent =
+                    `Verified! Thank you ${name}. A SuflexMedia Lead Architect will contact you at ${phone} regarding your ${needs} build.`;
+                document.getElementById('modalSuccessContainer').classList.remove('hidden');
+            }
+        }
+
+        function resetHeroForm() {
+            document.getElementById('heroQuoteForm').reset();
+            document.getElementById('heroQuoteForm').classList.remove('hidden');
+            document.getElementById('heroSuccessState').classList.add('hidden');
+        }
+
+        // -----------------------------------------------------------------
+        // 6. Quote Modal & FAQ Accordion Controls
+        // -----------------------------------------------------------------
+        function openQuoteModal(contextLabel) {
+            document.getElementById('modalFormContainer').classList.remove('hidden');
+            document.getElementById('modalSuccessContainer').classList.add('hidden');
+            if (contextLabel) {
+                document.getElementById('modalContextSubtitle').textContent = `Scope: ${contextLabel} · 100% IP Ownership`;
+            }
+            const modal = document.getElementById('quoteModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeQuoteModal() {
+            const modal = document.getElementById('quoteModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function toggleFaq(index) {
+            const content = document.getElementById(`faqContent-${index}`);
+            const icon = document.getElementById(`faqIcon-${index}`);
+            const isHidden = content.classList.contains('hidden');
+
+            for (let i = 0; i < 4; i++) {
+                document.getElementById(`faqContent-${i}`).classList.add('hidden');
+                document.getElementById(`faqIcon-${i}`).textContent = '+';
+            }
+
+            if (isHidden) {
+                content.classList.remove('hidden');
+                icon.textContent = '−';
+            }
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenuDrawer').classList.toggle('hidden');
+        }
+
+        // Initialize all interactive views on load
+        window.addEventListener('DOMContentLoaded', () => {
+            switchAppPreview('fintech');
+            switchWebPreview('saas');
+            renderEstimatorOutput();
+            renderPortfolio('all');
+            toggleFaq(0);
+        });
+    </script>
+</body>
+</html>

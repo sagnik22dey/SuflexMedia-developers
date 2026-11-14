@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
+  <title>SuflexMedia — Application Development &amp; High-Velocity Web Engineering Studio</title>
+  <meta content="SuflexMedia architects native &amp; cross-platform iOS/Android mobile apps, sub-second Next.js web platforms, and enterprise SaaS systems with 100% IP ownership." name="description"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/static/css/style.css"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            obsidian: "#06070B",
+            slateBase: "#0D1017",
+            slateElevated: "#131722",
+            slateStroke: "#1F2433",
+            brandIndigo: "#6366F1",
+            brandLime: "#A3E635",
+            brandCyan: "#06B6D4"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            display: ["Plus Jakarta Sans", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-obsidian text-slate-200 selection:bg-brandLime selection:text-obsidian min-h-screen relative overflow-x-hidden pb-20 sm:pb-0">
+
+  <div class="fixed inset-0 radial-cyber-glow pointer-events-none -z-10"></div>
+  <div class="fixed inset-0 blueprint-grid pointer-events-none -z-10"></div>
+
+  <header class="fixed top-0 inset-x-0 z-50 bg-obsidian/90 backdrop-blur-xl border-b border-slateStroke/80 transition-all duration-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between">
+      <a href="#home" class="flex items-center gap-2.5 sm:gap-3 group">
+        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-slateBase border border-slateStroke flex items-center justify-center relative overflow-hidden group-hover:border-brandLime transition-colors shrink-0">
+          <span class="material-symbols-outlined text-brandLime text-base sm:text-lg">terminal</span>
+          <span class="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-brandLime animate-ping"></span>
+        </div>
+        <div class="flex flex-col">
+          <div class="font-display font-extrabold text-base sm:text-lg tracking-tight text-white flex items-center gap-1">
+            Suflex<span class="text-brandLime">Media</span>
+          </div>
+          <span class="font-mono text-[9px] sm:text-[10px] text-slate-400 tracking-wider">APP &amp; WEB STUDIO</span>
+        </div>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-6 xl:gap-8">
+        <a href="#home" class="font-mono text-xs text-brandLime tracking-wide transition-colors">00 · Home</a>
+        <a href="#facilities" class="font-mono text-xs text-slate-400 hover:text-white tracking-wide transition-colors">01 · Facilities</a>
+        <a href="#showcase" class="font-mono text-xs text-slate-400 hover:text-white tracking-wide transition-colors">02 · Systems</a>
+        <a href="#process" class="font-mono text-xs text-slate-400 hover:text-white tracking-wide transition-colors">03 · Roadmap</a>
+        <a href="#estimator" class="font-mono text-xs text-slate-400 hover:text-white tracking-wide transition-colors">04 · Estimator</a>
+        <a href="#faq" class="font-mono text-xs text-slate-400 hover:text-white tracking-wide transition-colors">05 · FAQ</a>
+      </nav>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <div class="hidden md:inline-flex items-center gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-slateBase tech-border">
+          <span class="w-2 h-2 rounded-full bg-brandLime animate-pulse"></span>
+          <span class="font-mono text-[10px] sm:text-[11px] text-brandLime tracking-wider">SYS_ACTIVE</span>
+        </div>
+        
+        <a href="#estimator" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 sm:px-4 sm:py-2 rounded-lg bg-brandLime hover:bg-lime-300 text-obsidian font-display font-bold text-xs uppercase tracking-wider shadow-lg shadow-brandLime/20 transition-all active:scale-95">
+          <span>Scope Build</span>
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </a>
+
+        <button onclick="toggleMobileNav()" aria-label="Toggle Navigation Menu" class="lg:hidden p-2 rounded-lg bg-slateBase tech-border text-slate-200 hover:text-white flex items-center justify-center cursor-pointer">
+          <span class="material-symbols-outlined text-xl" id="mobileMenuIcon">menu</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobileNavMenu" class="hidden lg:hidden border-t border-slateStroke bg-obsidian/95 backdrop-blur-2xl px-5 py-6 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slateStroke/60">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-brandLime animate-pulse"></span>
+          <span class="font-mono text-xs text-brandLime font-semibold">ALL RUNTIMES OPERATIONAL</span>
+        </div>
+        <span class="font-mono text-[10px] text-slate-400">LATENCY: 12ms</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 font-mono text-xs">
+        <a href="#home" onclick="closeMobileNav()" class="p-3 rounded-xl bg-slateBase tech-border text-brandLime flex items-center gap-2">
+          <span class="text-brandLime">00</span>
+          <span>Home</span>
+        </a>
+        <a href="#facilities" onclick="closeMobileNav()" class="p-3 rounded-xl bg-slateBase tech-border text-slate-300 hover:text-white flex items-center gap-2">
+          <span class="text-brandCyan">01</span>
+          <span>Facilities</span>
+        </a>
+        <a href="#showcase" onclick="closeMobileNav()" class="p-3 rounded-xl bg-slateBase tech-border text-slate-300 hover:text-white flex items-center gap-2">
+          <span class="text-brandIndigo">02</span>
+          <span>Systems</span>
+        </a>
+        <a href="#process" onclick="closeMobileNav()" class="p-3 rounded-xl bg-slateBase tech-border text-slate-300 hover:text-white flex items-center gap-2">
+          <span class="text-brandLime">03</span>
+          <span>Roadmap</span>
+        </a>
+        <a href="#estimator" onclick="closeMobileNav()" class="p-3 rounded-xl bg-slateBase tech-border text-slate-300 hover:text-white flex items-center gap-2">
+          <span class="text-brandCyan">04</span>
+          <span>Estimator</span>
+        </a>
+        <a href="#faq" onclick="closeMobileNav()" class="p-3 rounded-xl bg-slateBase tech-border text-slate-300 hover:text-white flex items-center gap-2">
+          <span class="text-slate-400">05</span>
+          <span>FAQ</span>
+        </a>
+      </div>
+
+      <div class="pt-2 flex flex-col gap-2.5">
+        <button onclick="closeMobileNav(); quickScopeModal('Mobile Nav Scope')" class="w-full py-3 rounded-xl bg-brandLime text-obsidian font-display font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-brandLime/20">
+          <span>CONFIGURE YOUR APP OR WEB BUILD</span>
+          <span class="material-symbols-outlined text-sm">bolt</span>
+        </button>
+        <a href="https://wa.me/" rel="noopener" target="_blank" class="w-full py-3 rounded-xl bg-slateElevated tech-border text-slate-200 font-mono text-xs flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-sm text-brandLime">chat</span>
+          <span>WhatsApp Scoping (+91 Direct Chat)</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative pt-20 sm:pt-24 lg:pt-28">
+
+    <section id="home" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-16">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        
+        <div class="lg:col-span-7 flex flex-col gap-4 sm:gap-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-brandIndigo/15 border border-brandIndigo/30 w-fit">
+            <span class="w-2 h-2 rounded-full bg-brandLime animate-pulse"></span>
+            <span class="font-mono text-[10px] sm:text-[11px] text-indigo-300 font-semibold tracking-wider">SUFLEXMEDIA · MOBILE APPS &amp; WEB PLATFORMS</span>
+          </div>
+
+          <h1 class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white tracking-tight leading-[1.12]">
+            Engineered <span class="text-transparent bg-clip-text bg-gradient-to-r from-brandIndigo via-brandCyan to-brandLime">Mobile Apps</span> &amp; High-Velocity Websites.
+          </h1>
+
+          <p class="font-sans text-sm sm:text-base md:text-lg text-slate-300 max-w-2xl leading-relaxed">
+            SuflexMedia is a dedicated dual-facility engineering studio. We architect native &amp; cross-platform <strong class="text-white">iOS/Android applications</strong> alongside sub-second <strong class="text-white">Next.js websites, headless stores &amp; SaaS portals</strong> — shipped on fixed milestone contracts with 100% intellectual property ownership.
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
+            <a href="#estimator" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:py-4 rounded-xl bg-brandLime hover:bg-lime-300 text-obsidian font-display font-extrabold text-xs sm:text-sm tracking-wider shadow-xl shadow-brandLime/25 transition-all active:scale-95">
+              <span>CONFIGURE YOUR BUILD</span>
+              <span class="material-symbols-outlined text-base">bolt</span>
+            </a>
+            <a href="#facilities" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:py-4 rounded-xl bg-slateBase tech-border hover:border-brandIndigo/50 text-white font-display font-semibold text-xs sm:text-sm transition-all">
+              <span>Explore Facilities</span>
+              <span class="font-mono text-xs text-brandIndigo">[01 / 02]</span>
+            </a>
+          </div>
+
+          <div class="flex items-center gap-3 sm:gap-4 pt-2 sm:pt-3 border-t border-slateStroke/80 max-w-xl">
+            <div class="flex -space-x-2 overflow-hidden shrink-0">
+              <div class="h-8 w-8 rounded-full ring-2 ring-obsidian bg-slateElevated flex items-center justify-center font-mono text-[11px] text-brandLime font-bold">SM</div>
+              <div class="h-8 w-8 rounded-full ring-2 ring-obsidian bg-slateBase flex items-center justify-center font-mono text-[11px] text-brandCyan font-bold">NX</div>
+              <div class="h-8 w-8 rounded-full ring-2 ring-obsidian bg-slateElevated flex items-center justify-center font-mono text-[11px] text-brandIndigo font-bold">FP</div>
+              <div class="h-8 w-8 rounded-full ring-2 ring-obsidian bg-slateStroke flex items-center justify-center font-mono text-[10px] text-white font-bold">+99</div>
+            </div>
+            <div class="flex flex-col">
+              <div class="flex items-center gap-1 text-brandLime">
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+                <span class="font-mono text-xs text-white font-bold ml-1">4.9/5</span>
+              </div>
+              <span class="font-mono text-[11px] sm:text-xs text-slate-400">Production-verified across 120+ shipped systems</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 pt-2">
+            <div class="p-3 sm:p-3.5 rounded-xl bg-slateBase tech-border flex flex-col">
+              <span class="font-mono text-lg sm:text-2xl font-extrabold text-brandLime">99.98%</span>
+              <span class="font-mono text-[10px] sm:text-[11px] text-slate-400 mt-0.5">Crash-Free Mobile</span>
+            </div>
+            <div class="p-3 sm:p-3.5 rounded-xl bg-slateBase tech-border flex flex-col">
+              <span class="font-mono text-lg sm:text-2xl font-extrabold text-brandCyan">&lt;0.8s</span>
+              <span class="font-mono text-[10px] sm:text-[11px] text-slate-400 mt-0.5">Web LCP Speed</span>
+            </div>
+            <div class="p-3 sm:p-3.5 rounded-xl bg-slateBase tech-border flex flex-col">
+              <span class="font-mono text-lg sm:text-2xl font-extrabold text-brandIndigo">120+</span>
+              <span class="font-mono text-[10px] sm:text-[11px] text-slate-400 mt-0.5">Shipped Platforms</span>
+            </div>
+            <div class="p-3 sm:p-3.5 rounded-xl bg-slateBase tech-border flex flex-col">
+              <span class="font-mono text-lg sm:text-2xl font-extrabold text-white">100%</span>
+              <span class="font-mono text-[10px] sm:text-[11px] text-slate-400 mt-0.5">IP &amp; Code Ownership</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 w-full">
+          <div class="relative rounded-2xl bg-slateBase tech-border p-5 sm:p-7 shadow-2xl overflow-hidden group">
+            <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-brandIndigo via-brandCyan to-brandLime"></div>
+            
+            <div class="flex items-center justify-between pb-3 border-b border-slateStroke">
+              <div class="flex items-center gap-1.5 sm:gap-2">
+                <span class="material-symbols-outlined text-brandLime text-base sm:text-lg">tune</span>
+                <span class="font-mono text-[10px] sm:text-[11px] tracking-widest text-brandLime uppercase font-bold">INSTANT ARCHITECTURE BRIEF</span>
+              </div>
+              <span class="px-2 py-0.5 rounded bg-brandIndigo/20 text-indigo-300 font-mono text-[9px] sm:text-[10px]">FIXED QUOTE</span>
+            </div>
+
+            <div class="mt-3.5 mb-4">
+              <h2 class="font-display font-bold text-lg sm:text-xl text-white">Scope Your App or Website</h2>
+              <p class="font-sans text-xs text-slate-400 mt-0.5">Select specifications for guaranteed line-item pricing.</p>
+            </div>
+
+            <form id="heroLeadForm" onsubmit="submitHeroLead(event)" class="space-y-4">
+              <div>
+                <label class="block font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-400 mb-2">
+                  1. Target Infrastructure <span class="text-brandLime">*</span>
+                </label>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="heroBuildTypeGroup">
+                  <button type="button" onclick="selectBuildType(this, 'Mobile App (iOS/Android)')" class="hero-type-btn active min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs font-mono tech-border bg-slateElevated text-brandLime border-brandLime flex items-center gap-2 text-left transition cursor-pointer">
+                    <span class="text-sm">📱</span>
+                    <span>Mobile (iOS/Android)</span>
+                  </button>
+                  <button type="button" onclick="selectBuildType(this, 'Next.js 15 Web App')" class="hero-type-btn min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs font-mono tech-border bg-obsidian text-slate-400 hover:text-white flex items-center gap-2 text-left transition cursor-pointer">
+                    <span class="text-sm">🌐</span>
+                    <span>Next.js 15 Web App</span>
+                  </button>
+                  <button type="button" onclick="selectBuildType(this, 'App + Web Ecosystem')" class="hero-type-btn min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs font-mono tech-border bg-obsidian text-slate-400 hover:text-white flex items-center gap-2 text-left transition cursor-pointer">
+                    <span class="text-sm">⚡</span>
+                    <span>Full App + Web Duo</span>
+                  </button>
+                  <button type="button" onclick="selectBuildType(this, 'E-Commerce / SaaS Portal')" class="hero-type-btn min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs font-mono tech-border bg-obsidian text-slate-400 hover:text-white flex items-center gap-2 text-left transition cursor-pointer">
+                    <span class="text-sm">🛍️</span>
+                    <span>SaaS / E-Commerce</span>
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-400 mb-2">
+                  2. Core Modules &amp; Runtimes
+                </label>
+                <div class="flex flex-wrap gap-1.5" id="heroModuleChips">
+                  <button type="button" onclick="toggleHeroChip(this)" class="hero-chip active px-2.5 py-1.5 rounded-lg font-mono text-[11px] tech-border bg-brandIndigo/20 text-indigo-300 border-brandIndigo/50 cursor-pointer">✓ Swift / Kotlin</button>
+                  <button type="button" onclick="toggleHeroChip(this)" class="hero-chip active px-2.5 py-1.5 rounded-lg font-mono text-[11px] tech-border bg-brandIndigo/20 text-indigo-300 border-brandIndigo/50 cursor-pointer">✓ Offline SQLite</button>
+                  <button type="button" onclick="toggleHeroChip(this)" class="hero-chip active px-2.5 py-1.5 rounded-lg font-mono text-[11px] tech-border bg-brandIndigo/20 text-indigo-300 border-brandIndigo/50 cursor-pointer">✓ Next.js SSR</button>
+                  <button type="button" onclick="toggleHeroChip(this)" class="hero-chip px-2.5 py-1.5 rounded-lg font-mono text-[11px] tech-border bg-obsidian text-slate-400 cursor-pointer">+ Cloud Postgres</button>
+                  <button type="button" onclick="toggleHeroChip(this)" class="hero-chip px-2.5 py-1.5 rounded-lg font-mono text-[11px] tech-border bg-obsidian text-slate-400 cursor-pointer">+ WebSockets / Map</button>
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <div>
+                  <label for="leadName" class="block font-mono text-[10px] uppercase text-slate-400 mb-1">Founder / Organization Name</label>
+                  <input id="leadName" required minlength="2" maxlength="80" type="text" placeholder="e.g. Apex Global Systems" class="w-full h-11 sm:h-12 bg-obsidian tech-border rounded-xl px-3.5 py-2.5 font-sans text-sm sm:text-base text-white placeholder:text-slate-600 focus:outline-none focus:border-brandCyan transition-colors"/>
+                </div>
+                <div>
+                  <label for="leadEmail" class="block font-mono text-[10px] uppercase text-slate-400 mb-1">Work Email</label>
+                  <input id="leadEmail" required type="email" placeholder="founder@company.com" class="w-full h-11 sm:h-12 bg-obsidian tech-border rounded-xl px-3.5 py-2.5 font-sans text-sm sm:text-base text-white placeholder:text-slate-600 focus:outline-none focus:border-brandCyan transition-colors"/>
+                </div>
+                <div>
+                  <label for="leadPhone" class="block font-mono text-[10px] uppercase text-slate-400 mb-1">WhatsApp or Phone</label>
+                  <input id="leadPhone" required minlength="7" maxlength="20" type="tel" placeholder="+91 98765 43210" class="w-full h-11 sm:h-12 bg-obsidian tech-border rounded-xl px-3.5 py-2.5 font-sans text-sm sm:text-base text-white placeholder:text-slate-600 focus:outline-none focus:border-brandCyan transition-colors"/>
+                </div>
+              </div>
+
+              <div id="heroLeadFeedback" class="hidden p-3 rounded-xl bg-brandLime/15 border border-brandLime/40 text-brandLime font-mono text-xs text-center"></div>
+
+              <button id="heroLeadSubmitBtn" type="submit" class="w-full min-h-[48px] py-3.5 rounded-xl bg-brandLime hover:bg-lime-300 text-obsidian font-display font-bold text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-brandLime/20 transition-all active:scale-[0.98] cursor-pointer">
+                <span>GET FIXED ARCHITECTURE QUOTE</span>
+                <span class="material-symbols-outlined text-base">arrow_forward</span>
+              </button>
+
+              <div class="flex items-center justify-center gap-1.5 text-center text-slate-400 font-mono text-[10px]">
+                <span class="material-symbols-outlined text-xs text-brandLime">verified_user</span>
+                <span>Guaranteed response within 4 hours · NDA by default</span>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="border-y border-slateStroke/80 bg-slateBase/40 py-3.5 sm:py-4 overflow-hidden relative">
+      <div class="pointer-events-none absolute left-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-r from-obsidian to-transparent z-10"></div>
+      <div class="pointer-events-none absolute right-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-l from-obsidian to-transparent z-10"></div>
+      
+      <div class="max-w-7xl mx-auto px-4 flex items-center gap-4 sm:gap-6 overflow-hidden">
+        <div class="flex items-center gap-2 font-mono text-[11px] sm:text-xs text-slate-400 shrink-0 pr-4 sm:pr-6 border-r border-slateStroke">
+          <span class="material-symbols-outlined text-sm text-brandLime">memory</span>
+          <span class="hidden sm:inline">ENTERPRISE RUNTIME STACK:</span>
+          <span class="sm:hidden">STACK:</span>
+        </div>
+        <div class="overflow-hidden w-full relative">
+          <div class="marquee-track flex items-center gap-6 sm:gap-8 font-mono text-xs text-slate-300 whitespace-nowrap">
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brandLime"></span> Flutter 3.29</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brandCyan"></span> Swift Native iOS</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brandIndigo"></span> Kotlin Multiplatform</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brandLime"></span> Next.js 15 Turbopack</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> React Server Components</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brandCyan"></span> Node.js / Fastify</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brandLime"></span> WebSockets &amp; WebRTC</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brandIndigo"></span> PostgreSQL / Supabase</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brandCyan"></span> Redis Cluster</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brandLime"></span> Mapbox GL</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brandCyan"></span> Docker Orchestration</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brandLime"></span> Flutter 3.29</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brandCyan"></span> Swift Native iOS</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brandIndigo"></span> Kotlin Multiplatform</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brandLime"></span> Next.js 15 Turbopack</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> React Server Components</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="facilities" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+      <div class="mb-8 sm:mb-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-slateBase tech-border mb-3">
+          <span class="w-1.5 h-1.5 rounded-full bg-brandCyan"></span>
+          <span class="font-mono text-xs text-brandCyan">STUDIO CORE FACILITIES</span>
+        </div>
+        <h2 class="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight">Dedicated Engineering Labs</h2>
+        <p class="font-sans text-sm sm:text-base text-slate-300 max-w-2xl mt-1.5">
+          Specialized architecture tracks separated by computational demands, release pipelines, and hardware integration.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        <div class="p-6 sm:p-8 rounded-2xl bg-slateBase tech-border relative overflow-hidden tech-border-glow transition-all">
+          <div class="flex items-center justify-between mb-5 sm:mb-6">
+            <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-slateElevated tech-border flex items-center justify-center text-brandLime shrink-0">
+              <span class="material-symbols-outlined text-xl sm:text-2xl">phone_iphone</span>
+            </div>
+            <span class="font-mono text-[11px] sm:text-xs px-2.5 py-1 rounded bg-slateElevated tech-border text-brandLime font-semibold">FACILITY 01</span>
+          </div>
+
+          <h3 class="font-display font-bold text-xl sm:text-2xl text-white mb-2">Native &amp; Cross-Platform Mobile Applications</h3>
+          <p class="font-sans text-xs sm:text-sm text-slate-300 mb-6 leading-relaxed">
+            High-concurrency iOS &amp; Android mobile software engineered with zero runtime lag, offline-first data caching, and frictionless App Store certification.
+          </p>
+
+          <div class="space-y-2.5 sm:space-y-3 mb-6">
+            <div class="p-3 sm:p-3.5 rounded-xl bg-obsidian tech-border">
+              <div class="font-mono text-[10px] sm:text-[11px] text-brandLime font-bold mb-0.5">CORE RUNTIMES &amp; STACK</div>
+              <div class="font-sans text-xs text-slate-200">Flutter 3.x, Kotlin Multiplatform, Swift Native iOS, SQLite Offline Cache</div>
+            </div>
+            <div class="p-3 sm:p-3.5 rounded-xl bg-obsidian tech-border">
+              <div class="font-mono text-[10px] sm:text-[11px] text-brandLime font-bold mb-0.5">DEVICE HARDWARE &amp; SENSORS</div>
+              <div class="font-sans text-xs text-slate-200">Biometrics (FaceID/Passkeys), Background GPS Telemetry, BLE Pairing, APNs &amp; FCM Push</div>
+            </div>
+            <div class="p-3 sm:p-3.5 rounded-xl bg-obsidian tech-border">
+              <div class="font-mono text-[10px] sm:text-[11px] text-brandLime font-bold mb-0.5">STORE CERTIFICATION &amp; IP</div>
+              <div class="font-sans text-xs text-slate-200">App Store &amp; Play Store Approval Handled · 100% Full Git Repository Transfer</div>
+            </div>
+          </div>
+
+          <a href="#estimator" class="inline-flex items-center gap-2 font-mono text-xs font-bold text-brandLime hover:underline">
+            <span>CONFIGURE MOBILE PLATFORM</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+        </div>
+
+        <div class="p-6 sm:p-8 rounded-2xl bg-slateBase tech-border relative overflow-hidden tech-border-glow transition-all">
+          <div class="flex items-center justify-between mb-5 sm:mb-6">
+            <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-slateElevated tech-border flex items-center justify-center text-brandIndigo shrink-0">
+              <span class="material-symbols-outlined text-xl sm:text-2xl">laptop_mac</span>
+            </div>
+            <span class="font-mono text-[11px] sm:text-xs px-2.5 py-1 rounded bg-slateElevated tech-border text-brandIndigo font-semibold">FACILITY 02</span>
+          </div>
+
+          <h3 class="font-display font-bold text-xl sm:text-2xl text-white mb-2">High-Velocity Web Platforms &amp; Headless Systems</h3>
+          <p class="font-sans text-xs sm:text-sm text-slate-300 mb-6 leading-relaxed">
+            Sub-second Next.js web applications, headless e-commerce architectures, and enterprise cloud portals engineered for extreme SEO performance.
+          </p>
+
+          <div class="space-y-2.5 sm:space-y-3 mb-6">
+            <div class="p-3 sm:p-3.5 rounded-xl bg-obsidian tech-border">
+              <div class="font-mono text-[10px] sm:text-[11px] text-brandIndigo font-bold mb-0.5">CORE ARCHITECTURE</div>
+              <div class="font-sans text-xs text-slate-200">Next.js 15 App Router, React Server Components (RSC), Turbopack, Edge Runtime</div>
+            </div>
+            <div class="p-3 sm:p-3.5 rounded-xl bg-obsidian tech-border">
+              <div class="font-mono text-[10px] sm:text-[11px] text-brandIndigo font-bold mb-0.5">PERFORMANCE GUARANTEE</div>
+              <div class="font-sans text-xs text-slate-200">Sub-0.8s Largest Contentful Paint (LCP), Zero Cumulative Layout Shift, 95+ Core Web Vitals</div>
+            </div>
+            <div class="p-3 sm:p-3.5 rounded-xl bg-obsidian tech-border">
+              <div class="font-mono text-[10px] sm:text-[11px] text-brandIndigo font-bold mb-0.5">INTEGRATION MATRIX</div>
+              <div class="font-sans text-xs text-slate-200">Headless CMS (Sanity/Strapi), Razorpay &amp; Stripe UPI Checkout, Cloudflare Global CDN</div>
+            </div>
+          </div>
+
+          <a href="#estimator" class="inline-flex items-center gap-2 font-mono text-xs font-bold text-brandIndigo hover:underline">
+            <span>CONFIGURE WEB ARCHITECTURE</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="showcase" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-10">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-slateBase tech-border mb-3">
+            <span class="w-1.5 h-1.5 rounded-full bg-brandLime"></span>
+            <span class="font-mono text-xs text-brandLime">DEPLOYED SYSTEMS</span>
+          </div>
+          <h2 class="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight">Architected For Performance. Shipped to Production.</h2>
+          <p class="font-sans text-sm sm:text-base text-slate-300 max-w-2xl mt-1.5">
+            Every build is benchmarked against real-world network turbulence, high concurrency transactions, and sub-second rendering.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2 bg-slateBase p-1.5 rounded-xl tech-border overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-1.5 shrink-0" id="portfolioFilterGroup">
+          <button onclick="filterShowcase('all', this)" class="showcase-tab active whitespace-nowrap min-h-[36px] px-3.5 py-1.5 rounded-lg text-brandLime font-mono text-xs font-semibold bg-slateElevated tech-border cursor-pointer">All Systems (8)</button>
+          <button onclick="filterShowcase('mobile', this)" class="showcase-tab whitespace-nowrap min-h-[36px] px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white font-mono text-xs cursor-pointer">Mobile Apps</button>
+          <button onclick="filterShowcase('web', this)" class="showcase-tab whitespace-nowrap min-h-[36px] px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white font-mono text-xs cursor-pointer">Web Platforms</button>
+          <button onclick="filterShowcase('ecosystem', this)" class="showcase-tab whitespace-nowrap min-h-[36px] px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white font-mono text-xs cursor-pointer">Ecosystems</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6" id="showcaseGrid">
+        
+        <article class="showcase-card rounded-2xl bg-slateBase tech-border overflow-hidden flex flex-col justify-between tech-border-glow transition-all" data-category="ecosystem">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-center justify-between pb-3 border-b border-slateStroke mb-4">
+              <span class="font-mono text-xs font-bold text-brandLime">BUILD #01</span>
+              <span class="font-mono text-[11px] text-slate-400">FOOD TECH</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-1">Native Kitchen</h3>
+            <p class="font-sans text-xs text-slate-400 mb-3">Food Delivery Mobile App &amp; Web Dispatch Console</p>
+            <div class="py-1.5 px-3 rounded-lg bg-obsidian font-mono text-xs text-brandCyan mb-4">
+              Flutter 3 · Node.js · WebSockets
+            </div>
+            <ul class="space-y-2 font-sans text-xs text-slate-300">
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brandLime shrink-0"></span>
+                <span><strong class="text-white">Sub-2s UPI Checkout</strong> flow across iOS &amp; Android</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brandLime shrink-0"></span>
+                <span><strong class="text-white">Live Rider Map</strong> with sub-100ms GPS updates</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brandLime shrink-0"></span>
+                <span><strong class="text-white">45k+ Monthly Orders</strong> with zero database locks</span>
+              </li>
+            </ul>
+          </div>
+          <div class="px-5 py-3 sm:px-6 sm:py-3.5 bg-slateElevated border-t border-slateStroke flex items-center justify-between">
+            <button onclick="inspectCaseStudy('native-kitchen')" class="font-mono text-xs text-slate-300 hover:text-white flex items-center gap-1 cursor-pointer">
+              <span>Inspect Architecture</span>
+              <span class="material-symbols-outlined text-xs">north_east</span>
+            </button>
+            <button onclick="quickScopeModal('Native Kitchen - Food Delivery')" class="font-mono text-xs text-brandLime font-semibold hover:underline flex items-center gap-1 cursor-pointer">
+              <span>Build Similar</span>
+              <span class="material-symbols-outlined text-xs">arrow_forward</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="showcase-card rounded-2xl bg-slateBase tech-border overflow-hidden flex flex-col justify-between tech-border-glow transition-all" data-category="web">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-center justify-between pb-3 border-b border-slateStroke mb-4">
+              <span class="font-mono text-xs font-bold text-brandCyan">BUILD #02</span>
+              <span class="font-mono text-[11px] text-slate-400">D2C SCALE</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-1">NexaCommerce</h3>
+            <p class="font-sans text-xs text-slate-400 mb-3">Headless D2C E-Commerce &amp; Progressive Web App</p>
+            <div class="py-1.5 px-3 rounded-lg bg-obsidian font-mono text-xs text-brandCyan mb-4">
+              Next.js 15 · Shopify GraphQL · Cloudflare Edge
+            </div>
+            <ul class="space-y-2 font-sans text-xs text-slate-300">
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brandCyan shrink-0"></span>
+                <span><strong class="text-white">0.6s LCP Speed</strong> on 4G cellular connections</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brandCyan shrink-0"></span>
+                <span><strong class="text-white">3.4x Conversion Uplift</strong> post-monolith migration</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brandCyan shrink-0"></span>
+                <span><strong class="text-white">100/100 Lighthouse</strong> Performance &amp; Best Practices</span>
+              </li>
+            </ul>
+          </div>
+          <div class="px-5 py-3 sm:px-6 sm:py-3.5 bg-slateElevated border-t border-slateStroke flex items-center justify-between">
+            <button onclick="inspectCaseStudy('nexacommerce')" class="font-mono text-xs text-slate-300 hover:text-white flex items-center gap-1 cursor-pointer">
+              <span>Inspect Architecture</span>
+              <span class="material-symbols-outlined text-xs">north_east</span>
+            </button>
+            <button onclick="quickScopeModal('NexaCommerce - Headless E-Com')" class="font-mono text-xs text-brandCyan font-semibold hover:underline flex items-center gap-1 cursor-pointer">
+              <span>Build Similar</span>
+              <span class="material-symbols-outlined text-xs">arrow_forward</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="showcase-card rounded-2xl bg-slateBase tech-border overflow-hidden flex flex-col justify-between tech-border-glow transition-all" data-category="mobile">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-center justify-between pb-3 border-b border-slateStroke mb-4">
+              <span class="font-mono text-xs font-bold text-brandIndigo">BUILD #03</span>
+              <span class="font-mono text-[11px] text-slate-400">FINTECH</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-1">FinPulse</h3>
+            <p class="font-sans text-xs text-slate-400 mb-3">Wealth, Biometric Keyring &amp; Expense Ecosystem</p>
+            <div class="py-1.5 px-3 rounded-lg bg-obsidian font-mono text-xs text-brandIndigo mb-4">
+              Swift Native · Kotlin · AES-256 GCM
+            </div>
+            <ul class="space-y-2 font-sans text-xs text-slate-300">
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brandIndigo shrink-0"></span>
+                <span><strong class="text-white">Biometric Passkeys</strong> with Secure Enclave isolation</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brandIndigo shrink-0"></span>
+                <span><strong class="text-white">Bank-Grade KYC Flow</strong> completed under 45 seconds</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brandIndigo shrink-0"></span>
+                <span><strong class="text-white">Zero Downtime</strong> during ledger sync cycles</span>
+              </li>
+            </ul>
+          </div>
+          <div class="px-5 py-3 sm:px-6 sm:py-3.5 bg-slateElevated border-t border-slateStroke flex items-center justify-between">
+            <button onclick="inspectCaseStudy('finpulse')" class="font-mono text-xs text-slate-300 hover:text-white flex items-center gap-1 cursor-pointer">
+              <span>Inspect Architecture</span>
+              <span class="material-symbols-outlined text-xs">north_east</span>
+            </button>
+            <button onclick="quickScopeModal('FinPulse - Fintech Mobile')" class="font-mono text-xs text-brandIndigo font-semibold hover:underline flex items-center gap-1 cursor-pointer">
+              <span>Build Similar</span>
+              <span class="material-symbols-outlined text-xs">arrow_forward</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="showcase-card rounded-2xl bg-slateBase tech-border overflow-hidden flex flex-col justify-between tech-border-glow transition-all" data-category="ecosystem">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-center justify-between pb-3 border-b border-slateStroke mb-4">
+              <span class="font-mono text-xs font-bold text-brandLime">BUILD #04</span>
+              <span class="font-mono text-[11px] text-slate-400">MOBILITY</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-1">GoTaxi Fleet</h3>
+            <p class="font-sans text-xs text-slate-400 mb-3">Ride-Hailing Mobile App &amp; Fleet Command Grid</p>
+            <div class="py-1.5 px-3 rounded-lg bg-obsidian font-mono text-xs text-brandLime mb-4">
+              Flutter · Mapbox GL · Socket.IO Cluster
+            </div>
+            <ul class="space-y-2 font-sans text-xs text-slate-300">
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brandLime shrink-0"></span>
+                <span><strong class="text-white">Real-Time Telemetry</strong> with dynamic surge pricing</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brandLime shrink-0"></span>
+                <span><strong class="text-white">Auto-Fare Calculation</strong> with multi-currency split</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brandLime shrink-0"></span>
+                <span><strong class="text-white">Offline-Sync Cache</strong> for intermittent connectivity</span>
+              </li>
+            </ul>
+          </div>
+          <div class="px-5 py-3 sm:px-6 sm:py-3.5 bg-slateElevated border-t border-slateStroke flex items-center justify-between">
+            <button onclick="inspectCaseStudy('gotaxi')" class="font-mono text-xs text-slate-300 hover:text-white flex items-center gap-1 cursor-pointer">
+              <span>Inspect Architecture</span>
+              <span class="material-symbols-outlined text-xs">north_east</span>
+            </button>
+            <button onclick="quickScopeModal('GoTaxi - Mobility Platform')" class="font-mono text-xs text-brandLime font-semibold hover:underline flex items-center gap-1 cursor-pointer">
+              <span>Build Similar</span>
+              <span class="material-symbols-outlined text-xs">arrow_forward</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="showcase-card rounded-2xl bg-slateBase tech-border overflow-hidden flex flex-col justify-between tech-border-glow transition-all" data-category="web">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-center justify-between pb-3 border-b border-slateStroke mb-4">
+              <span class="font-mono text-xs font-bold text-brandCyan">BUILD #05</span>
+              <span class="font-mono text-[11px] text-slate-400">SAAS ERP</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-1">BuildFlow ERP</h3>
+            <p class="font-sans text-xs text-slate-400 mb-3">Enterprise Cloud ERP &amp; Multi-Branch Web Portal</p>
+            <div class="py-1.5 px-3 rounded-lg bg-obsidian font-mono text-xs text-brandCyan mb-4">
+              Next.js 15 · PostgreSQL · Supabase RBAC
+            </div>
+            <ul class="space-y-2 font-sans text-xs text-slate-300">
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brandCyan shrink-0"></span>
+                <span><strong class="text-white">RBAC Access Control</strong> across 500+ employee tiers</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brandCyan shrink-0"></span>
+                <span><strong class="text-white">Handles 500k+ SKU Rows</strong> smoothly without latency</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brandCyan shrink-0"></span>
+                <span><strong class="text-white">Automated Daily Backups</strong> to geo-replicated S3 stores</span>
+              </li>
+            </ul>
+          </div>
+          <div class="px-5 py-3 sm:px-6 sm:py-3.5 bg-slateElevated border-t border-slateStroke flex items-center justify-between">
+            <button onclick="inspectCaseStudy('buildflow')" class="font-mono text-xs text-slate-300 hover:text-white flex items-center gap-1 cursor-pointer">
+              <span>Inspect Architecture</span>
+              <span class="material-symbols-outlined text-xs">north_east</span>
+            </button>
+            <button onclick="quickScopeModal('BuildFlow - Cloud ERP')" class="font-mono text-xs text-brandCyan font-semibold hover:underline flex items-center gap-1 cursor-pointer">
+              <span>Build Similar</span>
+              <span class="material-symbols-outlined text-xs">arrow_forward</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="showcase-card rounded-2xl bg-slateBase tech-border overflow-hidden flex flex-col justify-between tech-border-glow transition-all" data-category="ecosystem">
+          <div class="p-5 sm:p-6">
+            <div class="flex items-center justify-between pb-3 border-b border-slateStroke mb-4">
+              <span class="font-mono text-xs font-bold text-brandIndigo">BUILD #06</span>
+              <span class="font-mono text-[11px] text-slate-400">TELEHEALTH</span>
+            </div>
+            <h3 class="font-display font-bold text-lg sm:text-xl text-white mb-1">MediCare+ Live</h3>
+            <p class="font-sans text-xs text-slate-400 mb-3">Telemedicine Video App &amp; Doctor Web Console</p>
+            <div class="py-1.5 px-3 rounded-lg bg-obsidian font-mono text-xs text-brandIndigo mb-4">
+              WebRTC · React Native · Next.js Doctor Portal
+            </div>
+            <ul class="space-y-2 font-sans text-xs text-slate-300">
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brandIndigo shrink-0"></span>
+                <span><strong class="text-white">Ultra-Low Latency Video</strong> with packet fallback codec</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brandIndigo shrink-0"></span>
+                <span><strong class="text-white">Encrypted E-Prescriptions</strong> verified digitally</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brandIndigo shrink-0"></span>
+                <span><strong class="text-white">99.99% Uptime SLA</strong> during peak morning queues</span>
+              </li>
+            </ul>
+          </div>
+          <div class="px-5 py-3 sm:px-6 sm:py-3.5 bg-slateElevated border-t border-slateStroke flex items-center justify-between">
+            <button onclick="inspectCaseStudy('medicare')" class="font-mono text-xs text-slate-300 hover:text-white flex items-center gap-1 cursor-pointer">
+              <span>Inspect Architecture</span>
+              <span class="material-symbols-outlined text-xs">north_east</span>
+            </button>
+            <button onclick="quickScopeModal('MediCare - Telemedicine')" class="font-mono text-xs text-brandIndigo font-semibold hover:underline flex items-center gap-1 cursor-pointer">
+              <span>Build Similar</span>
+              <span class="material-symbols-outlined text-xs">arrow_forward</span>
+            </button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section id="process" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+      <div class="mb-8 sm:mb-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-slateBase tech-border mb-3">
+          <span class="w-1.5 h-1.5 rounded-full bg-brandLime"></span>
+          <span class="font-mono text-xs text-brandLime">DELIVERY PROTOCOL</span>
+        </div>
+        <h2 class="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight">Deterministic Milestone Execution</h2>
+        <p class="font-sans text-sm sm:text-base text-slate-300 max-w-2xl mt-1.5">
+          Eliminate ambiguity. Our delivery roadmap locks deliverables, milestones, and release windows before writing line one.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 relative">
+        <div class="p-5 sm:p-6 rounded-2xl bg-slateBase tech-border relative flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3 sm:mb-4">
+              <span class="font-mono text-sm sm:text-base font-bold text-brandLime">STAGE 01</span>
+              <span class="font-mono text-[10px] sm:text-[11px] text-slate-400">48 HOURS</span>
+            </div>
+            <h4 class="font-display font-bold text-base sm:text-lg text-white mb-1.5">Architecture Blueprint &amp; PRD</h4>
+            <p class="font-sans text-xs text-slate-300 leading-relaxed">
+              Deep technical audit, database schema modeling, API contract definition, and interactive UX wireframes agreed before engineering starts.
+            </p>
+          </div>
+          <div class="mt-5 sm:mt-6 pt-3.5 sm:pt-4 border-t border-slateStroke font-mono text-[10px] sm:text-[11px] text-slate-400 flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-sm text-brandLime">check_circle</span>
+            <span>Firm Scope Document Handed</span>
+          </div>
+        </div>
+
+        <div class="p-5 sm:p-6 rounded-2xl bg-slateBase tech-border relative flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3 sm:mb-4">
+              <span class="font-mono text-sm sm:text-base font-bold text-brandCyan">STAGE 02</span>
+              <span class="font-mono text-[10px] sm:text-[11px] text-slate-400">MILESTONE 1</span>
+            </div>
+            <h4 class="font-display font-bold text-base sm:text-lg text-white mb-1.5">Fixed-Scope Milestones &amp; SLA</h4>
+            <p class="font-sans text-xs text-slate-300 leading-relaxed">
+              Every deliverable mapped to a verifiable milestone payout with 100% price guarantee and non-disclosure agreement protection.
+            </p>
+          </div>
+          <div class="mt-5 sm:mt-6 pt-3.5 sm:pt-4 border-t border-slateStroke font-mono text-[10px] sm:text-[11px] text-slate-400 flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-sm text-brandCyan">check_circle</span>
+            <span>Zero Unforeseen Budget Surprises</span>
+          </div>
+        </div>
+
+        <div class="p-5 sm:p-6 rounded-2xl bg-slateBase tech-border relative flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3 sm:mb-4">
+              <span class="font-mono text-sm sm:text-base font-bold text-brandIndigo">STAGE 03</span>
+              <span class="font-mono text-[10px] sm:text-[11px] text-slate-400">BI-WEEKLY</span>
+            </div>
+            <h4 class="font-display font-bold text-base sm:text-lg text-white mb-1.5">Bi-Weekly Agile Sprints</h4>
+            <p class="font-sans text-xs text-slate-300 leading-relaxed">
+              Live staging builds on TestFlight &amp; Vercel Preview. Code reviews every Friday with real physical device test reports.
+            </p>
+          </div>
+          <div class="mt-5 sm:mt-6 pt-3.5 sm:pt-4 border-t border-slateStroke font-mono text-[10px] sm:text-[11px] text-slate-400 flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-sm text-brandIndigo">check_circle</span>
+            <span>Inspect Real Progress Live</span>
+          </div>
+        </div>
+
+        <div class="p-5 sm:p-6 rounded-2xl bg-slateBase tech-border relative flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3 sm:mb-4">
+              <span class="font-mono text-sm sm:text-base font-bold text-brandLime">STAGE 04</span>
+              <span class="font-mono text-[10px] sm:text-[11px] text-slate-400">LAUNCH DAY</span>
+            </div>
+            <h4 class="font-display font-bold text-base sm:text-lg text-white mb-1.5">Store Launch &amp; IP Handover</h4>
+            <p class="font-sans text-xs text-slate-300 leading-relaxed">
+              App Store and Play Store approval handled directly. 100% Git repositories, credentials, and documentation transferred.
+            </p>
+          </div>
+          <div class="mt-5 sm:mt-6 pt-3.5 sm:pt-4 border-t border-slateStroke font-mono text-[10px] sm:text-[11px] text-slate-400 flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-sm text-brandLime">check_circle</span>
+            <span>60 Days Complimentary SLA</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="estimator" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+      <div class="rounded-3xl bg-slateBase tech-border p-5 sm:p-10 lg:p-12 shadow-2xl relative overflow-hidden">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 pb-5 sm:pb-6 border-b border-slateStroke mb-6 sm:mb-8">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="material-symbols-outlined text-brandLime">calculate</span>
+              <span class="font-mono text-[10px] sm:text-xs text-brandLime uppercase font-bold tracking-wider">BUDGET &amp; VELOCITY ESTIMATOR</span>
+            </div>
+            <h3 class="font-display font-extrabold text-xl sm:text-3xl text-white">Simulate Your Engineering Timeline</h3>
+          </div>
+          <div class="font-mono text-[10px] sm:text-xs px-3 py-1.5 rounded-lg bg-slateElevated text-brandCyan tech-border w-fit">
+            AUTO-CALCULATED SPEC
+          </div>
+        </div>
+
+        <div class="space-y-6 sm:space-y-8">
+          <div>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1 mb-3">
+              <label for="complexitySlider" class="font-mono text-xs text-white font-bold uppercase tracking-wider">1. Estimated Scope Complexity</label>
+              <span class="font-mono text-[11px] sm:text-xs text-brandLime font-bold" id="complexityLabel">PRODUCTION CORE (APPS + BACKEND)</span>
+            </div>
+            <input id="complexitySlider" oninput="updateEstimator()" max="3" min="1" step="1" type="range" value="2" class="w-full h-3 bg-obsidian rounded-lg appearance-none cursor-pointer accent-brandLime py-2"/>
+            <div class="flex justify-between text-slate-400 font-mono text-[10px] sm:text-[11px] mt-2">
+              <span>MVP Prototype (3-4 wks)</span>
+              <span>Production Core (4-6 wks)</span>
+              <span>Enterprise Scale (8-12 wks)</span>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-mono text-xs text-white font-bold uppercase tracking-wider mb-2.5 sm:mb-3">2. Target Ecosystems Included</label>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
+              <label class="flex items-center gap-3 p-3 sm:p-3.5 rounded-xl bg-obsidian tech-border cursor-pointer hover:border-brandLime transition-colors">
+                <input id="estMobileCheck" onchange="updateEstimator()" checked type="checkbox" class="rounded border-slateStroke text-brandLime focus:ring-0 bg-slateBase"/>
+                <span class="font-mono text-xs text-white">Native / Flutter Mobile</span>
+              </label>
+              <label class="flex items-center gap-3 p-3 sm:p-3.5 rounded-xl bg-obsidian tech-border cursor-pointer hover:border-brandLime transition-colors">
+                <input id="estWebCheck" onchange="updateEstimator()" checked type="checkbox" class="rounded border-slateStroke text-brandLime focus:ring-0 bg-slateBase"/>
+                <span class="font-mono text-xs text-white">Next.js 15 Web / PWA</span>
+              </label>
+              <label class="flex items-center gap-3 p-3 sm:p-3.5 rounded-xl bg-obsidian tech-border cursor-pointer hover:border-brandLime transition-colors">
+                <input id="estAdminCheck" onchange="updateEstimator()" type="checkbox" class="rounded border-slateStroke text-brandLime focus:ring-0 bg-slateBase"/>
+                <span class="font-mono text-xs text-white">Admin CMS &amp; BI Portal</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="p-5 sm:p-6 rounded-2xl bg-obsidian tech-border flex flex-col md:flex-row items-stretch md:items-center justify-between gap-5 sm:gap-6">
+            <div class="space-y-1 text-center md:text-left">
+              <span class="font-mono text-[10px] sm:text-[11px] text-slate-400">ESTIMATED PRODUCTION SPRINT</span>
+              <div class="font-display font-extrabold text-2xl sm:text-4xl text-brandLime" id="deliveryWindow">4 — 6 Weeks</div>
+              <p class="font-sans text-xs text-slate-300">Includes complete QA test runs, App Store submittal &amp; 60 days post-launch SLA.</p>
+            </div>
+            <button onclick="quickScopeModal('Estimator Custom Configuration')" class="min-h-[48px] px-6 sm:px-7 py-3.5 sm:py-4 rounded-xl bg-brandLime hover:bg-lime-300 text-obsidian font-display font-extrabold text-xs uppercase tracking-wider shadow-lg shadow-brandLime/20 transition-all active:scale-95 shrink-0 cursor-pointer">
+              LOCK IN TIMELINE QUOTE →
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+      <div class="text-center mb-8 sm:mb-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-slateBase tech-border mb-3">
+          <span class="w-1.5 h-1.5 rounded-full bg-brandLime"></span>
+          <span class="font-mono text-xs text-brandLime">TECHNICAL TRANSPARENCY</span>
+        </div>
+        <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-white tracking-tight">Frequently Asked Questions</h2>
+        <p class="font-sans text-xs sm:text-sm text-slate-300 max-w-xl mx-auto mt-1.5">
+          Direct clarity regarding IP handover, speed benchmarks, deployment cycles, and backend integration.
+        </p>
+      </div>
+
+      <div class="space-y-3.5 sm:space-y-4">
+        <details class="group rounded-2xl bg-slateBase tech-border p-4 sm:p-5 open:border-brandLime/50 transition-colors" open>
+          <summary class="flex justify-between items-center font-display font-bold text-sm sm:text-lg text-white cursor-pointer list-none gap-2">
+            <span>Do we own 100% of the source code and intellectual property?</span>
+            <span class="material-symbols-outlined text-slate-400 group-open:rotate-180 group-open:text-brandLime transition-transform shrink-0">expand_more</span>
+          </summary>
+          <p class="font-sans text-xs sm:text-sm text-slate-300 mt-3 pt-3 border-t border-slateStroke leading-relaxed">
+            Yes, absolutely. Once final delivery milestones are certified, you receive complete administrative transfer of all GitHub repositories, production Docker files, CI/CD pipeline secrets, database schema migrations, and design files in Figma. There are zero licensing fees or platform lock-in.
+          </p>
+        </details>
+
+        <details class="group rounded-2xl bg-slateBase tech-border p-4 sm:p-5 open:border-brandLime/50 transition-colors">
+          <summary class="flex justify-between items-center font-display font-bold text-sm sm:text-lg text-white cursor-pointer list-none gap-2">
+            <span>How fast can our mobile app or web platform go live?</span>
+            <span class="material-symbols-outlined text-slate-400 group-open:rotate-180 group-open:text-brandLime transition-transform shrink-0">expand_more</span>
+          </summary>
+          <p class="font-sans text-xs sm:text-sm text-slate-300 mt-3 pt-3 border-t border-slateStroke leading-relaxed">
+            Focused MVPs and performance web applications typically ship to staging within 3 to 4 weeks. Full-scale mobile platforms (iOS + Android with integrated payment gateways and real-time websockets) typically take between 5 to 7 weeks depending on scope complexity.
+          </p>
+        </details>
+
+        <details class="group rounded-2xl bg-slateBase tech-border p-4 sm:p-5 open:border-brandLime/50 transition-colors">
+          <summary class="flex justify-between items-center font-display font-bold text-sm sm:text-lg text-white cursor-pointer list-none gap-2">
+            <span>Do you handle Apple App Store &amp; Google Play Store publishing?</span>
+            <span class="material-symbols-outlined text-slate-400 group-open:rotate-180 group-open:text-brandLime transition-transform shrink-0">expand_more</span>
+          </summary>
+          <p class="font-sans text-xs sm:text-sm text-slate-300 mt-3 pt-3 border-t border-slateStroke leading-relaxed">
+            Yes. We directly configure your Apple Developer and Google Play Console accounts, set up TestFlight and Internal Testing tracks, complete all privacy questionnaires, manage store asset generation, and resolve any Apple Review Guideline queries until approval is achieved.
+          </p>
+        </details>
+
+        <details class="group rounded-2xl bg-slateBase tech-border p-4 sm:p-5 open:border-brandLime/50 transition-colors">
+          <summary class="flex justify-between items-center font-display font-bold text-sm sm:text-lg text-white cursor-pointer list-none gap-2">
+            <span>Can you work with our existing backend or third-party APIs?</span>
+            <span class="material-symbols-outlined text-slate-400 group-open:rotate-180 group-open:text-brandLime transition-transform shrink-0">expand_more</span>
+          </summary>
+          <p class="font-sans text-xs sm:text-sm text-slate-300 mt-3 pt-3 border-t border-slateStroke leading-relaxed">
+            Frequently. We interface cleanly with existing REST, GraphQL, or gRPC backend architectures. If needed, we build performant Next.js API orchestration layers or serverless middleware to aggregate legacy endpoints and optimize network payloads for mobile clients.
+          </p>
+        </details>
+
+        <details class="group rounded-2xl bg-slateBase tech-border p-4 sm:p-5 open:border-brandLime/50 transition-colors">
+          <summary class="flex justify-between items-center font-display font-bold text-sm sm:text-lg text-white cursor-pointer list-none gap-2">
+            <span>What happens after launch? Do you offer ongoing maintenance SLAs?</span>
+            <span class="material-symbols-outlined text-slate-400 group-open:rotate-180 group-open:text-brandLime transition-transform shrink-0">expand_more</span>
+          </summary>
+          <p class="font-sans text-xs sm:text-sm text-slate-300 mt-3 pt-3 border-t border-slateStroke leading-relaxed">
+            Every build includes a complimentary 60-day bug warranty and telemetry monitoring SLA. Post that period, clients can opt for our high-velocity retainer (guaranteed response within 2 hours, continuous OS updates for iOS/Android changes, and monthly feature sprint cycles).
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <section id="consultation" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+      <div class="rounded-3xl p-6 sm:p-12 lg:p-16 relative overflow-hidden bg-slateBase tech-border shadow-2xl">
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-brandIndigo/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-brandLime/15 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="relative z-10 max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-obsidian tech-border mb-3 sm:mb-4">
+            <span class="w-2 h-2 rounded-full bg-brandLime animate-ping"></span>
+            <span class="font-mono text-[11px] sm:text-xs text-brandLime font-semibold">Q2 PRODUCTION SLOTS: 2 AVAILABLE</span>
+          </div>
+
+          <h2 class="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl text-white mb-3 sm:mb-4 leading-tight">
+            Ready to engineer an app or web platform that outperforms your market?
+          </h2>
+
+          <p class="font-sans text-sm sm:text-lg text-slate-300 mb-6 sm:mb-8 leading-relaxed">
+            Book a 30-minute technical architecture call with our lead engineering partners. We audit your technical requirements and deliver a line-item estimate in under 24 hours.
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+            <button onclick="quickScopeModal('Direct Call Booking')" class="inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3.5 sm:py-4 rounded-xl bg-brandLime hover:bg-lime-300 text-obsidian font-display font-extrabold text-xs uppercase tracking-wider shadow-xl shadow-brandLime/25 transition-all active:scale-95 cursor-pointer">
+              <span>SCHEDULE ARCHITECTURE CALL</span>
+              <span class="material-symbols-outlined text-base">calendar_today</span>
+            </button>
+            <a href="https://wa.me/" rel="noopener" target="_blank" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:py-4 rounded-xl bg-slateElevated tech-border hover:border-brandLime text-white font-mono text-xs tracking-wider transition-colors">
+              <span class="material-symbols-outlined text-base text-brandLime">chat</span>
+              <span>Instant WhatsApp Scoping</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-obsidian border-t border-slateStroke py-10 sm:py-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-6 sm:gap-8">
+      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-6 sm:pb-8 border-b border-slateStroke">
+        <div>
+          <div class="font-display font-extrabold text-lg sm:text-xl text-white flex items-center gap-2">
+            Suflex<span class="text-brandLime">Media</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-brandLime"></span>
+          </div>
+          <p class="font-sans text-xs text-slate-400 mt-1 max-w-md">
+            Application Development &amp; High-Velocity Web Engineering Studio. Architecture without compromises.
+          </p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+          <div class="px-3 py-1.5 rounded-lg bg-slateBase tech-border flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-brandLime"></span>
+            <span class="font-mono text-[11px] sm:text-xs text-brandLime">ALL SYSTEMS OPERATIONAL [99.99%]</span>
+          </div>
+          <div class="px-3 py-1.5 rounded-lg bg-slateBase tech-border font-mono text-[11px] sm:text-xs text-slate-400">
+            ENGINEERING HUB: KOLKATA &amp; GLOBAL
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-y-2.5 gap-x-6 sm:gap-x-8">
+        <a href="#estimator" class="font-mono text-xs text-brandLime hover:underline">Architecture Configurator</a>
+        <a href="#showcase" class="font-mono text-xs text-slate-400 hover:text-white">Engineered Platforms</a>
+        <a href="#facilities" class="font-mono text-xs text-slate-400 hover:text-white">Headless Systems</a>
+        <a href="#process" class="font-mono text-xs text-slate-400 hover:text-white">Delivery Roadmap</a>
+        <a href="#faq" class="font-mono text-xs text-slate-400 hover:text-white">Security &amp; Compliance</a>
+      </div>
+
+      <div class="font-mono text-[11px] sm:text-xs text-slate-500 border-t border-slateStroke pt-5 sm:pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 text-center sm:text-left">
+        <span>&copy; 2026 SuflexMedia Engineering Studio. High-Velocity Architecture &amp; Bespoke Systems.</span>
+        <span class="text-slate-400">LATENCY: 12ms · US-EAST / ASIA-SOUTH</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="fixed bottom-0 inset-x-0 z-40 bg-obsidian/92 backdrop-blur-xl border-t border-slateStroke p-2.5 sm:hidden flex items-center justify-between gap-2.5">
+    <a href="https://wa.me/" rel="noopener" target="_blank" class="flex-1 py-2.5 px-3 rounded-xl bg-slateElevated tech-border text-white font-mono text-xs flex items-center justify-center gap-1.5">
+      <span class="material-symbols-outlined text-sm text-brandLime">chat</span>
+      <span>WhatsApp</span>
+    </a>
+    <button onclick="quickScopeModal('Mobile Dock Quick Scope')" class="flex-1 py-2.5 px-3 rounded-xl bg-brandLime text-obsidian font-display font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-lg shadow-brandLime/25 cursor-pointer">
+      <span class="material-symbols-outlined text-sm">bolt</span>
+      <span>Scope Build</span>
+    </button>
+  </div>
+
+  <div id="quickModal" class="fixed inset-0 z-50 hidden items-end sm:items-center justify-center bg-obsidian/85 backdrop-blur-md p-0 sm:p-4">
+    <div class="relative w-full max-w-lg rounded-t-3xl sm:rounded-2xl bg-slateBase tech-border p-5 sm:p-8 shadow-2xl max-h-[92vh] overflow-y-auto">
+      <button onclick="closeQuickModal()" aria-label="Close Modal" class="absolute top-4 right-4 text-slate-400 hover:text-white font-mono text-xl p-1 cursor-pointer">&times;</button>
+      
+      <div class="flex items-center gap-2 mb-2">
+        <span class="w-2 h-2 rounded-full bg-brandLime"></span>
+        <span class="font-mono text-xs text-brandLime uppercase font-bold" id="modalServiceTag">DIRECT SPECIFICATION</span>
+      </div>
+      <h3 class="font-display font-bold text-xl sm:text-2xl text-white mb-1" id="modalTitle">Request Architecture Quote</h3>
+      <p class="font-sans text-xs text-slate-300 mb-4 sm:mb-5">Provide contact details to receive a fixed milestone quote within 24 hours.</p>
+
+      <form id="modalForm" onsubmit="submitModalLead(event)" class="space-y-3.5 sm:space-y-4">
+        <input type="hidden" id="modalServiceInput" value="General Inquiry"/>
+        <div>
+          <label for="modalName" class="block font-mono text-[10px] uppercase text-slate-400 mb-1">Your Name</label>
+          <input id="modalName" required minlength="2" maxlength="80" type="text" placeholder="e.g. Alex Mercer" class="w-full h-11 bg-obsidian tech-border rounded-xl px-3.5 py-2.5 font-sans text-sm sm:text-base text-white focus:outline-none focus:border-brandLime transition-colors"/>
+        </div>
+        <div>
+          <label for="modalEmail" class="block font-mono text-[10px] uppercase text-slate-400 mb-1">Work Email</label>
+          <input id="modalEmail" required type="email" placeholder="alex@company.com" class="w-full h-11 bg-obsidian tech-border rounded-xl px-3.5 py-2.5 font-sans text-sm sm:text-base text-white focus:outline-none focus:border-brandLime transition-colors"/>
+        </div>
+        <div>
+          <label for="modalPhone" class="block font-mono text-[10px] uppercase text-slate-400 mb-1">WhatsApp or Phone</label>
+          <input id="modalPhone" required minlength="7" maxlength="20" type="tel" placeholder="+91 98765 43210" class="w-full h-11 bg-obsidian tech-border rounded-xl px-3.5 py-2.5 font-sans text-sm sm:text-base text-white focus:outline-none focus:border-brandLime transition-colors"/>
+        </div>
+        <div>
+          <label for="modalNotes" class="block font-mono text-[10px] uppercase text-slate-400 mb-1">Project Details or Requirements (Optional)</label>
+          <textarea id="modalNotes" rows="2" placeholder="Brief outline of target platforms, expected users, or timeline..." class="w-full bg-obsidian tech-border rounded-xl px-3.5 py-2.5 font-sans text-sm text-white focus:outline-none focus:border-brandLime transition-colors"></textarea>
+        </div>
+
+        <div id="modalFeedback" class="hidden p-3 rounded-xl bg-brandLime/15 border border-brandLime/40 text-brandLime font-mono text-xs text-center"></div>
+
+        <button id="modalSubmitBtn" type="submit" class="w-full min-h-[48px] py-3.5 rounded-xl bg-brandLime hover:bg-lime-300 text-obsidian font-display font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer">
+          <span>SUBMIT ARCHITECTURE BRIEF</span>
+          <span class="material-symbols-outlined text-sm">send</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div id="caseStudyModal" class="fixed inset-0 z-50 hidden items-end sm:items-center justify-center bg-obsidian/85 backdrop-blur-md p-0 sm:p-4">
+    <div class="relative w-full max-w-2xl rounded-t-3xl sm:rounded-2xl bg-slateBase tech-border p-5 sm:p-8 shadow-2xl max-h-[92vh] overflow-y-auto">
+      <button onclick="closeCaseStudyModal()" aria-label="Close Case Study" class="absolute top-4 right-4 text-slate-400 hover:text-white font-mono text-xl p-1 cursor-pointer">&times;</button>
+      <div id="caseStudyContent"></div>
+    </div>
+  </div>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
